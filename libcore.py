@@ -8,6 +8,7 @@ def get_time_variance(mat1, mat2):
     height, width = mat1.shape
     total_dim = height * width * 2
 
+    # Skript 2, S. 13
     variance = np.sum((mat1 - mat2) ** 2) / total_dim
 
     return variance
