@@ -24,21 +24,3 @@ def get_mean(mats):
     total_mean /= len(mats)
 
     return total_mean
-
-
-def test_variance():
-    matrix1 = np.ones((5, 5))
-    matrix2 = np.ones((5, 5)) * 2
-
-    print("time variance: ", get_time_variance(matrix1, matrix2))
-
-
-def test_mean():
-    matrix1 = np.ones((5, 5))
-    matrix2 = np.ones((5, 5)) * 2
-
-    print("Mean: ", get_mean([matrix1, matrix2]))
-
-
-test_variance()
-test_mean()
