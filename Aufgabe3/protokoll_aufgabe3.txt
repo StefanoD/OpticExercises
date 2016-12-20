@@ -1,1 +1,1 @@
-Belichtungszeite: 6,138
+Belichtungszeit: 6,138 ms
