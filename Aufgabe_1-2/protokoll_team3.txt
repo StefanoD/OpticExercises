@@ -1,7 +1,23 @@
+Kamera-Format: RAW, 8 Bit
+
 C-Mount und Auflagemaß bei Kamera: 17,5 mm
 Um das C-Mount und Auflagemaß der Kamera zu berücksichtigen, wurde der Photometer-Abstand bei 17,5 mm angelegt.
+
 Photometer-Messung:
  -3,810 uA (SN30928)
  59,17 nA (unkalibriert, fest installiert)
 
 Kamera-Abstand an Ulbrichtkugel: Auf Anschlag
+
+Belichtungszeiten:
+
+0,02	1
+1,645	2
+3,27	3
+4,895	4
+6,52	5
+8,145	6
+9,77	7
+11,395	8
+13,02	9
+
