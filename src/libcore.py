@@ -24,3 +24,24 @@ def get_mean(mats):
     total_mean /= len(mats)
 
     return total_mean
+
+
+def get_radiation_energy(area, irradiance, exposure_time):
+    """Liefert die Strahlungsenergie"""
+    # Skript 2, S. 5
+    return area * irradiance * exposure_time
+
+
+def get_mean_of_photons(area, irradiance, exposure_time, wavelength):
+    """
+    Liefert die mittlere Anzahl an einfallenden Photonen
+    auf der Sensorfläche
+    :param area in m²
+    :param irradiance in W/m²
+    :param exposure_time in seconds
+    :param wavelength in m
+    """
+    # Skript 2, S. 5
+    hc = 5.034 * 10 ** 24
+
+    return hc * area * irradiance * exposure_time * wavelength
