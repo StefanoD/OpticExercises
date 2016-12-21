@@ -29,7 +29,10 @@ def get_mean(mats):
 
 
 def get_mean_of_two_images(images):
-    """Gibt den Mittelwert von zwei aufeinander folgenden Bilder zurück"""
+    """
+    Gibt den Mittelwert von zwei aufeinander folgenden Bilder zurück.
+    Bilder sollten entsprechend zusammenhängend sortiert sein.
+    """
     counter = 1
     mean_list = []
 
