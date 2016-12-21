@@ -2,25 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a83bc991-278b-4c68-b528-6243e41df251" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild002_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild002_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild11395_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild11395_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild1302_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild1302_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild1645_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild1645_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild327_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild327_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild4895_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild4895_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild652_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild652_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild8145_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild8145_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild977_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild977_01.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aufgabe1.py" afterPath="$PROJECT_DIR$/src/aufgabe1.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/libcore.py" afterPath="$PROJECT_DIR$/src/libcore.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,9 +24,11 @@
       <file leaf-file-name="libcore.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/libcore.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="199">
+              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+              <folding>
+                <element signature="e#39#57#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -51,22 +36,10 @@
       <file leaf-file-name="aufgabe1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/aufgabe1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="27" column="30" lean-forward="false" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
+            <state relative-caret-position="984">
+              <caret line="90" column="45" lean-forward="false" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_libcore.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/test_libcore.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="21" column="35" lean-forward="false" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#29#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -450,7 +423,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25641027" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25641027" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -468,7 +441,14 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+      <option name="time" value="13" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -489,6 +469,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/lib64/python3.5/site-packages/PIL/Image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-71">
+          <caret line="2281" column="0" lean-forward="false" selection-start-line="2281" selection-start-column="0" selection-end-line="2281" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib64/python3.5/site-packages/numpy/lib/function_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="4585" column="0" lean-forward="false" selection-start-line="4585" selection-start-column="0" selection-end-line="4585" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/test_libcore.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
@@ -501,16 +497,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/libcore.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="199">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <element signature="e#39#57#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/aufgabe1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="27" column="30" lean-forward="false" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
+        <state relative-caret-position="984">
+          <caret line="90" column="45" lean-forward="false" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>

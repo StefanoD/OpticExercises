@@ -1,5 +1,7 @@
 """Grundfunktionalität für Aufgaben"""
 import numpy as np
+import matplotlib.pyplot as plt
+import glob
 
 
 def get_time_variance(mat1, mat2):
@@ -45,3 +47,16 @@ def get_mean_of_photons(area, irradiance, exposure_time, wavelength):
     hc = 5.034 * 10 ** 24
 
     return hc * area * irradiance * exposure_time * wavelength
+
+
+def get_sorted_images(path):
+    sorted_images = []
+
+    # Aufsteigend sortierte Bild-Pfade
+    image_paths = sorted(glob.glob(path))
+
+    for image_path in image_paths:
+        image = plt.imread(image_path)
+        sorted_images.append(image)
+
+    return sorted_images
