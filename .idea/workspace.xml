@@ -2,24 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a83bc991-278b-4c68-b528-6243e41df251" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild002_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild002_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild11395_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild11395_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild1302_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild1302_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild1645_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild1645_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild327_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild327_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild4895_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild4895_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild652_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild652_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild8145_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild8145_01.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild977_00.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/offen/bild977_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild002_00.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild002_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild11395_00.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild11395_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild1302_00.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild1302_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild1645_00.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild1645_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild327_00.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild327_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild4895_00.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild4895_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild652_00.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild652_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild8145_00.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild8145_01.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild977_00.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe_1-2/geschlossen/bild977_01.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aufgabe1.py" afterPath="$PROJECT_DIR$/src/aufgabe1.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -50,8 +51,8 @@
       <file leaf-file-name="aufgabe1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/aufgabe1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="24" column="33" lean-forward="true" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
+            <state relative-caret-position="300">
+              <caret line="27" column="30" lean-forward="false" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -508,8 +509,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/aufgabe1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="24" column="33" lean-forward="true" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
+        <state relative-caret-position="300">
+          <caret line="27" column="30" lean-forward="false" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>

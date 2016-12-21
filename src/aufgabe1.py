@@ -25,7 +25,7 @@ def plot_mean_of_photons():
     mean_of_photons_for_texp = []
 
     for texp in TIME_OF_EXPOSURE_MS:
-        texp_sec = texp / 1000.0
+        texp_sec = texp / 1000
         mean_of_photons = libcore.get_mean_of_photons(PIXEL_AREA_METER,
                                             IRRADIANCE_WATT_PER_SQUARE_METER,
                                             texp_sec,
