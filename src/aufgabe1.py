@@ -10,30 +10,31 @@ WAVELENGTH_METER = 0.000000525
 """Pixelgröße aus Datenblatt entnommen"""
 PIXEL_AREA_METER = 0.0000045 ** 2
 
-TIME_OF_EXPOSURE_SECONDS = [0.00002,
-                            0.001645,
-                            0.00327,
-                            0.004895,
-                            0.00652,
-                            0.008145,
-                            0.00977,
-                            0.011395,
-                            0.01302]
+TIME_OF_EXPOSURE_MS = [0.02,
+                       1.645,
+                       3.27,
+                       4.895,
+                       6.52,
+                       8.145,
+                       9.77,
+                       11.395,
+                       13.02]
 
 
 def plot_mean_of_photons():
     mean_of_photons_for_texp = []
 
-    for texp in TIME_OF_EXPOSURE_SECONDS:
+    for texp in TIME_OF_EXPOSURE_MS:
+        texp_sec = texp / 1000.0
         mean_of_photons = libcore.get_mean_of_photons(PIXEL_AREA_METER,
-                                        IRRADIANCE_WATT_PER_SQUARE_METER,
-                                        texp,
-                                        WAVELENGTH_METER)
+                                            IRRADIANCE_WATT_PER_SQUARE_METER,
+                                            texp_sec,
+                                            WAVELENGTH_METER)
 
         mean_of_photons_for_texp.append(mean_of_photons)
 
-    plt.plot(TIME_OF_EXPOSURE_SECONDS, mean_of_photons_for_texp, 'ro')
-    plt.xlabel('Time of Exposure [s]')
+    plt.plot(TIME_OF_EXPOSURE_MS, mean_of_photons_for_texp, 'ro')
+    plt.xlabel('Time of Exposure [ms]')
     plt.ylabel('Mean of Photons per Pixel')
 
     plt.show()
