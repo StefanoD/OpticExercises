@@ -9,7 +9,7 @@ Photometer-Messung:
 
 Kamera-Abstand an Ulbrichtkugel: Auf Anschlag
 
-Belichtungszeiten:
+Belichtungszeiten in ms:
 
 0,02	1
 1,645	2
