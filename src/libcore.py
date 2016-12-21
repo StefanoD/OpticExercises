@@ -28,6 +28,25 @@ def get_mean(mats):
     return total_mean
 
 
+def get_mean_of_two_images(images):
+    """Gibt den Mittelwert von zwei aufeinander folgenden Bilder zurück"""
+    counter = 1
+    mean_list = []
+
+    last_image = None
+
+    for image in images:
+        if counter == 1:
+            last_image = image
+            counter += 1
+        else:
+            mean = get_mean([image, last_image])
+            mean_list.append(mean)
+            counter = 1
+
+    return mean_list
+
+
 def get_radiation_energy(area, irradiance, exposure_time):
     """Liefert die Strahlungsenergie"""
     # Skript 2, S. 5
