@@ -1,8 +1,7 @@
 """Grundfunktionalität für Aufgaben"""
 import numpy as np
-import matplotlib.pyplot as plt
 import glob
-
+import scipy.misc
 
 def get_time_variance(mat1, mat2):
     """Liefert zeitliche Varianz von zwei Matrizen zurück"""
@@ -26,6 +25,28 @@ def get_mean(mats):
     total_mean /= len(mats)
 
     return total_mean
+
+
+def get_time_variance_of_two_images(images):
+    """
+    Gibt die zeitliche Varianz von zwei aufeinander folgenden Bilder zurück.
+    Bilder sollten entsprechend zusammenhängend sortiert sein.
+    """
+    counter = 1
+    variance_list = []
+
+    last_image = None
+
+    for image in images:
+        if counter == 1:
+            last_image = image
+            counter += 1
+        else:
+            variance = get_time_variance(image, last_image)
+            variance_list.append(variance)
+            counter = 1
+
+    return variance_list
 
 
 def get_mean_of_two_images(images):
@@ -78,7 +99,7 @@ def get_sorted_images(path):
     image_paths = sorted(glob.glob(path))
 
     for image_path in image_paths:
-        image = plt.imread(image_path)
+        image = scipy.misc.imread(image_path, mode='L')
         sorted_images.append(image)
 
     return sorted_images

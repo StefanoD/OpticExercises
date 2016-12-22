@@ -66,9 +66,44 @@ def get_mean_gray_value_without_dark_noise():
     return mean_gray_value_without_dark_noise
 
 
+def get_variance_gray_value_without_dark_noise():
+    # ../MessungenAufgabe_1-2/offen/*
+    path_open = join(join(join("..", "MessungenAufgabe_1-2"), "offen", "*"))
+
+    # ../MessungenAufgabe_1-2/geschlossen/*
+    path_closed = join(join(join("..", "MessungenAufgabe_1-2"), "geschlossen"), "*")
+
+    # Verarbeite images_open
+    images_open = libcore.get_sorted_images(path_open)
+
+    variance_open = libcore.get_time_variance_of_two_images(images_open)
+    variance_open = np.matrix(variance_open)
+
+    # Verarbeite images_closed
+    images_closed = libcore.get_sorted_images(path_closed)
+
+    variance_closed = libcore.get_time_variance_of_two_images(images_closed)
+    variance_closed = np.matrix(variance_closed)
+
+    variance_gray_value_without_dark_noise = variance_open - variance_closed
+
+    return variance_gray_value_without_dark_noise
+
+
+def plot_photo_transfer():
+    mean_gray_value_without_dark_noise = get_mean_gray_value_without_dark_noise()
+    variance_gray_value_without_dark_noise = get_variance_gray_value_without_dark_noise()
+
+    plt.plot(mean_gray_value_without_dark_noise, variance_gray_value_without_dark_noise, 'ro')
+    plt.xlabel('gray value - dark value')
+    plt.ylabel('variance gray value')
+
+    plt.show()
+
 def main():
     #plot_mean_of_photons()
-    get_mean_gray_value_without_dark_noise()
+    #get_mean_gray_value_without_dark_noise()
+    plot_photo_transfer()
 
 if __name__ == '__main__':
     main()
