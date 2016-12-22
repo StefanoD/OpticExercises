@@ -137,6 +137,7 @@ def plot_photo_transfer():
     variance_without_sat = variance_gray_value_without_dark_noise[mean_without_sat_indices]
 
     # Steigung und Y-Achsenabschnitt der Geraden
+    # Die Steigung ist gleichzeitig auch der Gain K.
     slope, intercept, _, _, _ = stats.linregress(mean_without_sat, variance_without_sat)
 
     # Anfang und Ende der Geraden bestimmen
