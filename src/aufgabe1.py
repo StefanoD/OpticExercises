@@ -1,6 +1,6 @@
 import libcore
 import matplotlib.pyplot as plt
-import os
+from os.path import join
 import numpy as np
 
 """Berechnete Bestrahlungsstärke E. Siehe Rechnung in Ordner MessungenAufgabe_1-2"""
@@ -44,10 +44,10 @@ def plot_mean_of_photons():
 
 def get_mean_gray_value_without_dark_noise():
     # ../MessungenAufgabe_1-2/offen/*
-    path_open = os.path.join(os.path.join(os.path.join("..", "MessungenAufgabe_1-2"), "offen", "*"))
+    path_open = join(join(join("..", "MessungenAufgabe_1-2"), "offen", "*"))
 
     # ../MessungenAufgabe_1-2/geschlossen/*
-    path_closed = os.path.join(os.path.join(os.path.join("..", "MessungenAufgabe_1-2"), "geschlossen"), "*")
+    path_closed = join(join(join("..", "MessungenAufgabe_1-2"), "geschlossen"), "*")
 
     # Verarbeite images_open
     images_open = libcore.get_sorted_images(path_open)
