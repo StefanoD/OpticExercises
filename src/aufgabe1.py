@@ -24,6 +24,8 @@ TIME_OF_EXPOSURE_MS = [0.02,
                        11.395,
                        13.02]
 
+QUANTIZATION_NOISE = 1.0/12.0
+
 
 def plot_mean_of_photons():
     mean_of_photons_for_texp = []
@@ -92,7 +94,8 @@ def get_variance_gray_value_without_dark_noise():
     return variance_gray_value_without_dark_noise
 
 
-def plot_photo_transfer():
+def plot_photon_transfer():
+    # Mittelwert und Varianz aufsteigend nach der Belichtungszeigt sortiert
     mean_gray_value_without_dark_noise = get_mean_gray_value_without_dark_noise()
     variance_gray_value_without_dark_noise = get_variance_gray_value_without_dark_noise()
 
@@ -139,6 +142,7 @@ def plot_photo_transfer():
     # Steigung und Y-Achsenabschnitt der Geraden
     # Die Steigung ist gleichzeitig auch der Gain K.
     slope, intercept, _, _, stderr = stats.linregress(mean_without_sat, variance_without_sat)
+    system_gain = slope
 
     # Anfang und Ende der Geraden bestimmen
     line_begin = intercept
@@ -150,14 +154,26 @@ def plot_photo_transfer():
     # Zeichne gestrichelte Linie ab Sättigungsbeginn
     plt.plot([mean_sat_begin, 255], [line_end, intercept + slope * 255], 'b--')
 
-    # System Gain = Steigung der Regeression
-    plt.text(70, -0.7, r'$K = {:.4} \pm {:.2}$'.format(slope, stderr))
+    dark_signal = libcore.get_dark_signal(variance_gray_value_without_dark_noise[0],
+                                          QUANTIZATION_NOISE, system_gain)
+
+    # Dunkel-Signal und System Gain in Plot einfügen
+    plt.text(65, -0.7, r'$\sigma^2_{{y.dark}} = {:.2f} DN^2, K = {:.4} \pm {:.2}$'.format(dark_signal,
+                                                                                       system_gain,
+                                                                                       stderr))
 
     plt.show()
 
+    return system_gain
+
+
+def plot_sensivity():
+    pass
+
+
 def main():
     #plot_mean_of_photons()
-    plot_photo_transfer()
+    system_gain = plot_photon_transfer()
 
 if __name__ == '__main__':
     main()

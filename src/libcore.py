@@ -3,6 +3,26 @@ import numpy as np
 import glob
 import scipy.misc
 
+
+def get_dark_signal(sigma_dark_min, sigma_quantization_noise, system_gain):
+    """
+
+    :param sigma_dark_min: Varianz des temporären Rauschens.
+                           Aufnahme mit minimaler Belichtungszeit bei verdeckter Kamera.
+    :param sigma_quantization_noise: Varianz des Quantisierungsrauschen. Meist 1/12
+    :param system_gain:
+    :return:
+    """
+    if sigma_dark_min < 0.24:
+        """
+        Das temporäre Rauschen wird vom Quantisierungsrauschen dominiert.
+        Setze sigma_dark_min auf 0.49. Siehe S.18, EMVA 1288, Release 3.1
+        """
+        sigma_dark_min = 0.49
+
+    return (sigma_dark_min - sigma_quantization_noise) / (system_gain ** 2)
+
+
 def get_time_variance(mat1, mat2):
     """Liefert zeitliche Varianz von zwei Matrizen zurück"""
     # Liefert Dimension der Matrix zurück
