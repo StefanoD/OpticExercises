@@ -138,13 +138,20 @@ def plot_photo_transfer():
 
     # Steigung und Y-Achsenabschnitt der Geraden
     # Die Steigung ist gleichzeitig auch der Gain K.
-    slope, intercept, _, _, _ = stats.linregress(mean_without_sat, variance_without_sat)
+    slope, intercept, _, _, stderr = stats.linregress(mean_without_sat, variance_without_sat)
 
     # Anfang und Ende der Geraden bestimmen
     line_begin = intercept
-    line_end = intercept + slope * x_end
+    line_end = intercept + slope * mean_sat_begin
 
-    plt.plot([x_begin, x_end], [line_begin, line_end])
+    # Zeichne durchgezogene Linie bis Sättigungsbeginn
+    plt.plot([x_begin, mean_sat_begin], [line_begin, line_end])
+
+    # Zeichne gestrichelte Linie ab Sättigungsbeginn
+    plt.plot([mean_sat_begin, 255], [line_end, intercept + slope * 255], 'b--')
+
+    # System Gain = Steigung der Regeression
+    plt.text(70, -0.7, r'$K = {:.4} \pm {:.2}$'.format(slope, stderr))
 
     plt.show()
 
