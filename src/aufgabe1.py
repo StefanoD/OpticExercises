@@ -159,8 +159,10 @@ def plot_photon_transfer():
 
     # Dunkel-Signal und System Gain in Plot einfügen
     plt.text(65, -0.7, r'$\sigma^2_{{y.dark}} = {:.2f} DN^2, K = {:.4} \pm {:.2}$'.format(dark_signal,
-                                                                                       system_gain,
-                                                                                       stderr))
+                                                                                          system_gain,
+                                                                                          stderr))
+
+    plt.title("Photon transfer")
 
     plt.show()
 
