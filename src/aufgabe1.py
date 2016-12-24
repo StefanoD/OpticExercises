@@ -107,8 +107,8 @@ def plot_photon_transfer():
 
     # Plotte mittlere Grauwerte und Varianz ohne Dunkelstrom
     plt.plot(mean_gray_value_without_dark_noise, variance_gray_value_without_dark_noise, 'ro')
-    plt.xlabel('gray value - dark value')
-    plt.ylabel('variance gray value')
+    plt.xlabel('gray value - dark value $\mu_{{y}} - \mu_{{y.dark}}$ (DN)')
+    plt.ylabel('variance gray value $\sigma^2_{{y}} - \sigma^2_{{y.dark}}$ (DN²)')
 
     # Sättingspunkt ist an der Stelle der maximalen Varianz
     saturation_index = np.argmax(variance_gray_value_without_dark_noise)
@@ -158,9 +158,10 @@ def plot_photon_transfer():
                                           QUANTIZATION_NOISE, system_gain)
 
     # Dunkel-Signal und System Gain in Plot einfügen
-    plt.text(65, -0.7, r'$\sigma^2_{{y.dark}} = {:.2f} DN^2, K = {:.4} \pm {:.2}$'.format(dark_signal,
-                                                                                          system_gain,
-                                                                                          stderr))
+    stderr_percent = stderr / system_gain * 100
+    plt.text(65, -0.7, r'$\sigma^2_{{y.dark}} = {:.2f} DN^2, K = {:.4} \pm {:.2}\%$'.format(dark_signal,
+                                                                                            system_gain,
+                                                                                            stderr_percent))
 
     plt.title("Photon transfer")
 
