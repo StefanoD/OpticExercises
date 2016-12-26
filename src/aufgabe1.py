@@ -46,58 +46,60 @@ def plot_mean_of_photons():
     plt.show()
 
 
-def get_mean_gray_value_without_dark_noise():
-    # ../MessungenAufgabe_1-2/offen/*
-    path_open = join(join(join("..", "MessungenAufgabe_1-2"), "offen", "*"))
-
+def get_mean_dark_grey_value():
     # ../MessungenAufgabe_1-2/geschlossen/*
     path_closed = join(join(join("..", "MessungenAufgabe_1-2"), "geschlossen"), "*")
 
-    # Verarbeite images_open
-    images_open = libcore.get_sorted_images(path_open)
-
-    mean_open = libcore.get_mean_of_two_images(images_open)
-    mean_open = np.array(mean_open)
-
-    # Verarbeite images_closed
     images_closed = libcore.get_sorted_images(path_closed)
 
     mean_closed = libcore.get_mean_of_two_images(images_closed)
-    mean_closed = np.array(mean_closed)
-
-    mean_gray_value_without_dark_noise = mean_open - mean_closed
-
-    return mean_gray_value_without_dark_noise
+    return np.array(mean_closed)
 
 
-def get_variance_gray_value_without_dark_noise():
+def get_mean_grey_values():
     # ../MessungenAufgabe_1-2/offen/*
     path_open = join(join(join("..", "MessungenAufgabe_1-2"), "offen", "*"))
 
-    # ../MessungenAufgabe_1-2/geschlossen/*
-    path_closed = join(join(join("..", "MessungenAufgabe_1-2"), "geschlossen"), "*")
+    images_open = libcore.get_sorted_images(path_open)
+
+    mean_open = libcore.get_mean_of_two_images(images_open)
+    return np.array(mean_open)
+
+
+def get_variance_gray_values():
+    # ../MessungenAufgabe_1-2/offen/*
+    path_open = join(join(join("..", "MessungenAufgabe_1-2"), "offen", "*"))
 
     # Verarbeite images_open
     images_open = libcore.get_sorted_images(path_open)
 
     variance_open = libcore.get_time_variance_of_two_images(images_open)
-    variance_open = np.array(variance_open)
+    return np.array(variance_open)
 
-    # Verarbeite images_closed
+
+def get_variance_of_dark_gray_values():
+    # ../MessungenAufgabe_1-2/geschlossen/*
+    path_closed = join(join(join("..", "MessungenAufgabe_1-2"), "geschlossen"), "*")
+
     images_closed = libcore.get_sorted_images(path_closed)
 
     variance_closed = libcore.get_time_variance_of_two_images(images_closed)
-    variance_closed = np.array(variance_closed)
-
-    variance_gray_value_without_dark_noise = variance_open - variance_closed
-
-    return variance_gray_value_without_dark_noise
+    return np.array(variance_closed)
 
 
 def plot_photon_transfer():
-    # Mittelwert und Varianz aufsteigend nach der Belichtungszeigt sortiert
-    mean_gray_value_without_dark_noise = get_mean_gray_value_without_dark_noise()
-    variance_gray_value_without_dark_noise = get_variance_gray_value_without_dark_noise()
+    # Hole Mittelwert und Varianz, die aufsteigend nach der Belichtungszeigt sortiert sind
+    # Varianz
+    variance_gray_value = get_variance_gray_values()
+    variance_dark_gray_value = get_variance_of_dark_gray_values()
+
+    variance_gray_value_without_dark_noise = variance_gray_value - variance_dark_gray_value
+
+    # Mittelwert
+    mean_grey_values = get_mean_grey_values()
+    mean_dark_grey_values = get_mean_dark_grey_value()
+
+    mean_gray_value_without_dark_noise = mean_grey_values - mean_dark_grey_values
 
     # Limits der Axen setzen
     x_begin = 0
@@ -154,7 +156,7 @@ def plot_photon_transfer():
     # Zeichne gestrichelte Linie ab Sättigungsbeginn
     plt.plot([mean_sat_begin, 255], [line_end, intercept + slope * 255], 'b--')
 
-    dark_signal = libcore.get_dark_signal(variance_gray_value_without_dark_noise[0],
+    dark_signal = libcore.get_dark_signal(variance_dark_gray_value[0],
                                           QUANTIZATION_NOISE, system_gain)
 
     # Dunkel-Signal und System Gain in Plot einfügen
@@ -166,17 +168,80 @@ def plot_photon_transfer():
     plt.title("Photon transfer")
 
     plt.show()
+    plt.clf()
 
-    return system_gain
+    return system_gain, saturation_index
 
 
-def plot_sensivity():
-    pass
+def plot_sensivity(system_gain, saturation_index):
+    # Mittelwert
+    mean_grey_values = get_mean_grey_values()
+    mean_dark_grey_values = get_mean_dark_grey_value()
+
+    mean_gray_value_without_dark_noise = mean_grey_values - mean_dark_grey_values
+
+    # Photonen pro Pixel berechnen
+    mean_of_photons_for_texp = []
+
+    for texp in TIME_OF_EXPOSURE_MS:
+        texp_sec = texp / 1000
+        mean_of_photons = libcore.get_mean_of_photons(PIXEL_AREA_METER,
+                                                      IRRADIANCE_WATT_PER_SQUARE_METER,
+                                                      texp_sec,
+                                                      WAVELENGTH_METER)
+
+        mean_of_photons_for_texp.append(mean_of_photons)
+
+    mean_of_photons_for_texp = np.array(mean_of_photons_for_texp)
+
+    x_end = np.max(mean_of_photons_for_texp) * 1.05
+
+    # Plotte mittlere Grauwerte und Varianz ohne Dunkelstrom
+    plt.plot(mean_of_photons_for_texp, mean_gray_value_without_dark_noise, 'ro')
+    plt.xlabel('irradiation (photons/pixel)')
+    plt.ylabel('gray value - dark value $\mu_{{y}} - \mu_{{y.dark}}$ (DN)')
+
+    # Lineare Regeression der steigenden Varianz bilden.
+    # Die Sättigung soll dabei nicht miteinfließen.
+    # Man geht davon aus, dass bei 70% des Sättigungspunktes die Sättigung anfängt
+    irradiation_sat_begin = mean_of_photons_for_texp[saturation_index] * 0.7
+
+    # Ermittle die Indizes der Matrix-Einträge die einen kleineren Wert als mean_sat_begin haben
+    without_sat_indices = mean_of_photons_for_texp < irradiation_sat_begin
+
+    # Mean-Matrix von der Sättigung bereinigt
+    mean_without_sat = mean_gray_value_without_dark_noise[without_sat_indices]
+    irradiation_without_sat = mean_of_photons_for_texp[without_sat_indices]
+
+    # Steigung und Y-Achsenabschnitt der Geraden
+    # Die Steigung ist gleichzeitig auch der Gain K.
+    slope, intercept, _, _, stderr = stats.linregress(irradiation_without_sat, mean_without_sat)
+    responsivity = slope
+
+    # Anfang und Ende der Geraden bestimmen
+    line_begin = intercept
+    line_end = intercept + slope * irradiation_sat_begin
+
+    # Zeichne durchgezogene Linie bis Sättigungsbeginn
+    plt.plot([0, irradiation_sat_begin], [line_begin, line_end])
+
+    # Zeichne gestrichelte Linie ab Sättigungsbeginn
+    plt.plot([irradiation_sat_begin, x_end], [line_end, intercept + slope * x_end], 'b--')
+
+    # Dunkel-Bild bei kleinstmöglichester Belichtungszeit hinzufügen
+    stderr_percent = stderr / system_gain * 100
+    plt.text(40000, 10, r'$\mu_{{y.dark}} = {:.2f} DN$'.format(mean_dark_grey_values[0]))
+
+    plt.title("Sensitivity")
+
+    plt.show()
+
 
 
 def main():
     #plot_mean_of_photons()
-    system_gain = plot_photon_transfer()
+    system_gain, saturation_index = plot_photon_transfer()
+    plot_sensivity(system_gain, saturation_index)
 
 if __name__ == '__main__':
     main()

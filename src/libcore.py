@@ -49,7 +49,7 @@ def get_mean(mats):
 
 def get_time_variance_of_two_images(images):
     """
-    Gibt die zeitliche Varianz von zwei aufeinander folgenden Bilder zurück.
+    Gibt die zeitliche Varianz von zwei aufeinander folgenden Bildern zurück.
     Bilder sollten entsprechend zusammenhängend sortiert sein.
     """
     counter = 1
