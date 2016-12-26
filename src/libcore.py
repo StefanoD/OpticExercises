@@ -35,18 +35,6 @@ def get_time_variance(mat1, mat2):
     return variance
 
 
-def get_mean(mats):
-    """Liefert den Mittelwert einer Matrix-Zelle"""
-    total_mean = 0.0
-
-    for mat in mats:
-        total_mean += np.mean(mat)
-
-    total_mean /= len(mats)
-
-    return total_mean
-
-
 def get_time_variance_of_two_images(images):
     """
     Gibt die zeitliche Varianz von zwei aufeinander folgenden Bildern zurück.
@@ -81,10 +69,11 @@ def get_mean_of_two_images(images):
 
     for image in images:
         if counter == 1:
-            last_image = image
+            last_image = np.array(image)
             counter += 1
         else:
-            mean = get_mean([image, last_image])
+            two_images = np.append(last_image, image)
+            mean = np.mean(two_images)
             mean_list.append(mean)
             counter = 1
 
