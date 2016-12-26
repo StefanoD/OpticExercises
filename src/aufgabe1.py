@@ -168,7 +168,6 @@ def plot_photon_transfer():
     plt.title("Photon transfer")
 
     plt.show()
-    plt.clf()
 
     return system_gain, saturation_index
 
@@ -229,8 +228,9 @@ def plot_sensivity(system_gain, saturation_index):
     plt.plot([irradiation_sat_begin, x_end], [line_end, intercept + slope * x_end], 'b--')
 
     # Dunkel-Bild bei kleinstmöglichester Belichtungszeit hinzufügen
-    stderr_percent = stderr / system_gain * 100
-    plt.text(40000, 10, r'$\mu_{{y.dark}} = {:.2f} DN$'.format(mean_dark_grey_values[0]))
+    quantum_efficiency = responsivity / system_gain
+    plt.text(37000, 10, r'$\mu_{{y.dark}} = {:.2f} DN, \eta = {:.2f}$'.format(mean_dark_grey_values[0],
+                                                                              quantum_efficiency))
 
     plt.title("Sensitivity")
 

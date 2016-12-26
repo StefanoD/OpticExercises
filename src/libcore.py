@@ -92,7 +92,7 @@ def get_mean_of_photons(area, irradiance, exposure_time, wavelength):
     auf der Sensorfläche
     :param area in m²
     :param irradiance in W/m²
-    :param exposure_time in seconds
+    :param exposure time in seconds
     :param wavelength in m
     """
     # Skript 2, S. 5
