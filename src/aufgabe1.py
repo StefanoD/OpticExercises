@@ -168,18 +168,13 @@ def plot_photon_transfer():
     plt.title("Photon transfer")
 
     plt.show()
+    plt.clf()
 
-    return system_gain, saturation_index
+    return system_gain, saturation_index, dark_signal
 
 
-def plot_sensivity(system_gain, saturation_index):
-    # Mittelwert
-    mean_grey_values = get_mean_grey_values()
-    mean_dark_grey_values = get_mean_dark_grey_value()
-
-    mean_gray_value_without_dark_noise = mean_grey_values - mean_dark_grey_values
-
-    # Photonen pro Pixel berechnen
+def get_mean_of_photons_per_pixel_and_exposure_time():
+    # Photonen pro Pixel und Belichtungszeit berechnen
     mean_of_photons_for_texp = []
 
     for texp in TIME_OF_EXPOSURE_MS:
@@ -191,7 +186,17 @@ def plot_sensivity(system_gain, saturation_index):
 
         mean_of_photons_for_texp.append(mean_of_photons)
 
-    mean_of_photons_for_texp = np.array(mean_of_photons_for_texp)
+    return np.array(mean_of_photons_for_texp)
+
+
+def plot_sensivity(system_gain, saturation_index):
+    # Mittelwert
+    mean_grey_values = get_mean_grey_values()
+    mean_dark_grey_values = get_mean_dark_grey_value()
+
+    mean_gray_value_without_dark_noise = mean_grey_values - mean_dark_grey_values
+
+    mean_of_photons_for_texp = get_mean_of_photons_per_pixel_and_exposure_time()
 
     x_end = np.max(mean_of_photons_for_texp) * 1.05
 
@@ -235,13 +240,81 @@ def plot_sensivity(system_gain, saturation_index):
     plt.title("Sensitivity")
 
     plt.show()
+    plt.clf()
+
+    return quantum_efficiency
 
 
+def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
+    # Mittelwert
+    mean_grey_values = get_mean_grey_values()
+    mean_dark_grey_values = get_mean_dark_grey_value()
+
+    mean_gray_value_without_dark_noise = mean_grey_values - mean_dark_grey_values
+
+    variance_gray_value = get_variance_gray_values()
+
+    snr_matrix = mean_gray_value_without_dark_noise / variance_gray_value
+
+    mean_of_photons_for_texp = get_mean_of_photons_per_pixel_and_exposure_time()
+
+    # Plotte mittlere Grauwerte und Varianz ohne Dunkelstrom
+    plt.loglog(mean_of_photons_for_texp, snr_matrix, 'ro')
+    plt.xlabel('irradiation (photons/pixel)')
+    plt.ylabel('SNR')
+
+    # Sättingspunkt ist an der Stelle der maximalen Varianz
+    saturation_index = np.argmax(snr_matrix)
+
+    # Lineare Regeression der steigenden Varianz bilden.
+    # Die Sättigung soll dabei nicht miteinfließen.
+    # Man geht davon aus, dass bei 70% des Sättigungspunktes die Sättigung anfängt
+    irradiation_sat_begin = mean_of_photons_for_texp[saturation_index] * 0.7
+
+    # Ermittle die Indizes der Matrix-Einträge die einen kleineren Wert als mean_sat_begin haben
+    without_sat_indices = mean_of_photons_for_texp < irradiation_sat_begin
+
+    # Matrizen von der Sättigung bereinigt
+    snr_without_sat = snr_matrix[without_sat_indices]
+    irradiation_without_sat = mean_of_photons_for_texp[without_sat_indices]
+
+    # Steigung und Y-Achsenabschnitt der Geraden
+    # Die Steigung ist gleichzeitig auch der Gain K.
+    slope, intercept, _, _, stderr = stats.linregress(irradiation_without_sat, snr_without_sat)
+
+    # Anfang und Ende der Geraden bestimmen
+    y_line_begin = intercept
+    y_line_end = intercept + slope * irradiation_sat_begin
+
+    # Zeichne durchgezogene Linie bis Sättigungsbeginn
+    plt.loglog([1, irradiation_sat_begin], [y_line_begin, y_line_end])
+
+    # Zeichne gestrichelte Linie ab Sättigungsbeginn
+    x_end = np.max(mean_of_photons_for_texp) * 1.05
+    plt.loglog([irradiation_sat_begin, x_end], [y_line_end, intercept + slope * x_end], 'b--')
+
+    # Berechne theoretische SNR-Kurve
+    # Skript 2, S. 18
+
+    snr_theory_values = np.array([])
+
+    for mean_of_photons in mean_of_photons_for_texp:
+        numerator = mean_of_photons * quantum_efficiency
+        denominator = np.sqrt(variance_dark_signal + (QUANTIZATION_NOISE / (system_gain ** 2)) +
+                              quantum_efficiency * mean_of_photons)
+        snr_theory = numerator / denominator
+        snr_theory_values = np.append(snr_theory_values, snr_theory)
+
+    plt.loglog(mean_of_photons_for_texp, snr_theory_values)
+    plt.title("SNR")
+
+    plt.show()
 
 def main():
     #plot_mean_of_photons()
-    system_gain, saturation_index = plot_photon_transfer()
-    plot_sensivity(system_gain, saturation_index)
+    system_gain, saturation_index, variance_dark_signal = plot_photon_transfer()
+    quantum_efficiency = plot_sensivity(system_gain, saturation_index)
+    plot_SNR(system_gain, quantum_efficiency, variance_dark_signal)
 
 if __name__ == '__main__':
     main()
