@@ -281,18 +281,7 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
     snr_without_sat = snr_matrix[without_sat_indices]
     irradiation_without_sat = mean_of_photons_for_texp[without_sat_indices]
 
-    """
-    # Steigung und Y-Achsenabschnitt der Geraden
-    # Die Steigung ist gleichzeitig auch der Gain K.
-    slope, intercept, _, _, stderr = stats.linregress(irradiation_without_sat, snr_without_sat)
-
-    # Anfang und Ende der Geraden bestimmen
-    y_line_begin = intercept
-    y_line_end = intercept + slope * irradiation_sat_begin
-
-    # Zeichne durchgezogene Linie bis Sättigungsbeginn
-    plt.loglog([1, irradiation_sat_begin], [y_line_begin, y_line_end], label="fit")"""
-
+    # Interpolation der gemessenen Punkte.
     from scipy.interpolate import interp1d
 
     new_x = np.insert(irradiation_without_sat, 0, 0)
@@ -303,19 +292,10 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
     new_x2 = np.insert(irradiation_without_sat, 0, 1)
     plt.loglog(new_x2, f2(new_x2), '--', label="fit")
 
+    # Berechne minimale Bestrahlungsstärke mit SNR = 1
     variance_dark_gray_value = get_variance_of_dark_gray_values()
     # Skript 2, S. 22
     computed_snr_1 = (1 / quantum_efficiency) * (variance_dark_gray_value[0] / system_gain + 0.5)
-
-    # Zeichne gestrichelte Linie ab Sättigungsbeginn
-    #x_end = np.max(mean_of_photons_for_texp) * 1.05
-    #plt.loglog([irradiation_sat_begin, x_end], [y_line_end, intercept + slope * x_end], 'b--')
-
-    # 1 = intercept + slope * irradiation_value
-    # => irradiation_value = (1 - intercept) / slope
-    #snr_1_irradiation_value = (1.0 - intercept) / slope
-
-    #plt.loglog(plt.xlim(), [intercept, intercept + slope * plt.xlim()[1]])
 
     plt.loglog([computed_snr_1, computed_snr_1], plt.ylim(),
                color='red', linewidth=1.5, linestyle="--")
