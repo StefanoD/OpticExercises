@@ -167,7 +167,7 @@ def plot_photon_transfer():
 
     plt.title("Photon transfer")
 
-    plt.show()
+    #plt.show()
     plt.clf()
 
     return system_gain, saturation_index, dark_signal
@@ -239,7 +239,7 @@ def plot_sensivity(system_gain, saturation_index):
 
     plt.title("Sensitivity")
 
-    plt.show()
+    #plt.show()
     plt.clf()
 
     return quantum_efficiency
@@ -255,13 +255,16 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
     variance_gray_value = get_variance_gray_values()
 
     snr_matrix = mean_gray_value_without_dark_noise / variance_gray_value
+    snr_ideal_matrix = np.sqrt(mean_gray_value_without_dark_noise)
 
     mean_of_photons_for_texp = get_mean_of_photons_per_pixel_and_exposure_time()
 
     # Plotte mittlere Grauwerte und Varianz ohne Dunkelstrom
-    plt.loglog(mean_of_photons_for_texp, snr_matrix, 'ro')
+    plt.loglog(mean_of_photons_for_texp, snr_matrix, 'ro', label="Measurements")
     plt.xlabel('irradiation (photons/pixel)')
     plt.ylabel('SNR')
+
+    plt.loglog(mean_of_photons_for_texp, snr_ideal_matrix, label="Ideal SNR")
 
     # Sättingspunkt ist an der Stelle der maximalen Varianz
     saturation_index = np.argmax(snr_matrix)
@@ -278,6 +281,7 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
     snr_without_sat = snr_matrix[without_sat_indices]
     irradiation_without_sat = mean_of_photons_for_texp[without_sat_indices]
 
+    """
     # Steigung und Y-Achsenabschnitt der Geraden
     # Die Steigung ist gleichzeitig auch der Gain K.
     slope, intercept, _, _, stderr = stats.linregress(irradiation_without_sat, snr_without_sat)
@@ -287,11 +291,34 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
     y_line_end = intercept + slope * irradiation_sat_begin
 
     # Zeichne durchgezogene Linie bis Sättigungsbeginn
-    plt.loglog([1, irradiation_sat_begin], [y_line_begin, y_line_end])
+    plt.loglog([1, irradiation_sat_begin], [y_line_begin, y_line_end], label="fit")"""
+
+    from scipy.interpolate import interp1d
+
+    new_x = np.insert(irradiation_without_sat, 0, 0)
+    new_y = np.insert(snr_without_sat, 0, 0)
+
+    f2 = interp1d(new_x, new_y, kind='cubic')
+
+    new_x2 = np.insert(irradiation_without_sat, 0, 1)
+    plt.loglog(new_x2, f2(new_x2), '--', label="fit")
+
+    variance_dark_gray_value = get_variance_of_dark_gray_values()
+    # Skript 2, S. 22
+    computed_snr_1 = (1 / quantum_efficiency) * (variance_dark_gray_value[0] / system_gain + 0.5)
 
     # Zeichne gestrichelte Linie ab Sättigungsbeginn
-    x_end = np.max(mean_of_photons_for_texp) * 1.05
-    plt.loglog([irradiation_sat_begin, x_end], [y_line_end, intercept + slope * x_end], 'b--')
+    #x_end = np.max(mean_of_photons_for_texp) * 1.05
+    #plt.loglog([irradiation_sat_begin, x_end], [y_line_end, intercept + slope * x_end], 'b--')
+
+    # 1 = intercept + slope * irradiation_value
+    # => irradiation_value = (1 - intercept) / slope
+    #snr_1_irradiation_value = (1.0 - intercept) / slope
+
+    #plt.loglog(plt.xlim(), [intercept, intercept + slope * plt.xlim()[1]])
+
+    plt.loglog([computed_snr_1, computed_snr_1], plt.ylim(),
+               color='red', linewidth=1.5, linestyle="--")
 
     # Berechne theoretische SNR-Kurve
     # Skript 2, S. 18
@@ -305,8 +332,14 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
         snr_theory = numerator / denominator
         snr_theory_values = np.append(snr_theory_values, snr_theory)
 
-    plt.loglog(mean_of_photons_for_texp, snr_theory_values)
+    plt.loglog(mean_of_photons_for_texp, snr_theory_values, label="theor. limit")
+    # Berechne über lineare Regression den Schwellwert für SNR = 1
+
+    slope, intercept, _, _, _ = stats.linregress(mean_of_photons_for_texp, snr_theory_values)
+
     plt.title("SNR")
+
+    plt.legend(loc='upper left')
 
     plt.show()
 
