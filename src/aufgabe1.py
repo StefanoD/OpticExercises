@@ -301,15 +301,8 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
 
     # Berechne theoretische SNR-Kurve
     # Skript 2, S. 18
-
-    snr_theory_values = np.array([])
-
-    for mean_of_photons in mean_of_photons_for_texp:
-        numerator = mean_of_photons * quantum_efficiency
-        denominator = np.sqrt(variance_dark_signal + (QUANTIZATION_NOISE / (system_gain ** 2)) +
-                              quantum_efficiency * mean_of_photons)
-        snr_theory = numerator / denominator
-        snr_theory_values = np.append(snr_theory_values, snr_theory)
+    snr_theory_values = mean_of_photons_for_texp * quantum_efficiency / np.sqrt(variance_dark_signal + (QUANTIZATION_NOISE / (system_gain ** 2)) +
+                              quantum_efficiency * mean_of_photons_for_texp)
 
     plt.loglog(mean_of_photons_for_texp, snr_theory_values, label="theor. limit")
     # Berechne über lineare Regression den Schwellwert für SNR = 1
