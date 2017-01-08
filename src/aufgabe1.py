@@ -167,7 +167,7 @@ def plot_photon_transfer():
 
     plt.title("Photon transfer")
 
-    plt.show()
+    #plt.show()
     plt.clf()
 
     return system_gain, saturation_index, dark_signal
@@ -316,15 +316,76 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
     irradiation_sat = mean_of_photons_for_texp[saturation_index]
     dynamic_range = 20 * np.log10(irradiation_sat / minimum_irradiation)
 
-    print("Dynamic Range: {} dB".format(dynamic_range))
+    print("Dynamic Range: {:.2f} dB".format(dynamic_range))
 
     plt.show()
+
+def get_power_spectrum(fft, axis=1):
+    return np.sqrt((1 / fft.shape[~axis]) * np.sum((fft * np.conj(fft)), axis=~axis))
+
+
+def aufgabe3(system_gain):
+    "MessungenAufgabe3/geschlossen"
+    # ../MessungenAufgabe_3/geschlossen/*
+    path_closed = join(join(join("..", "MessungenAufgabe3"), "geschlossen"), "*")
+    closed_images = np.array(libcore.get_sorted_images(path_closed))
+    dark_image = closed_images.mean(axis=0)
+    dark_image_mean = dark_image.mean()
+    dark_image_variance = np.var(dark_image)
+
+    dark_temporal_variance_matrix = np.sum((closed_images - dark_image) ** 2, axis=0) / (len(dark_image) - 1)
+    dark_temporal_variance_stack = dark_temporal_variance_matrix.mean()
+
+    corrected_dark_spatial_variance = dark_image_variance - (dark_temporal_variance_stack / len(path_closed))
+
+    DSNU = corrected_dark_spatial_variance / system_gain
+
+    print("DSNU: {:.2f} electrons".format(DSNU))
+
+    # ../MessungenAufgabe_3/offen/*
+    path_open = join(join(join("..", "MessungenAufgabe3"), "offen", "*"))
+    open_images = np.array(libcore.get_sorted_images(path_open))
+    white_image = open_images.mean(axis=0)
+    white_image_mean = white_image.mean()
+    white_image_variance = np.var(white_image)
+
+    white_temporal_variance_matrix = np.sum((open_images - white_image) ** 2, axis=0) / (len(white_image) - 1)
+    white_temporal_variance_stack = white_temporal_variance_matrix.mean()
+    white_temporal_std_stack = np.sqrt(white_temporal_variance_stack)
+
+    corrected_white_spatial_variance = white_image_variance - (white_temporal_variance_stack / len(open_images))
+    corrected_white_spatial_std = np.sqrt(corrected_white_spatial_variance)
+
+    PRNU = np.sqrt(corrected_white_spatial_variance - corrected_dark_spatial_variance) / (white_image_mean - dark_image_mean)
+    print("PRNU: {:.2f}%".format(PRNU))
+
+    """Spektrogramme berechnen"""
+    white_image_diff = white_image - white_image_mean
+    dark_image_diff = dark_image - dark_image_mean
+
+    """Weiß PRNU"""
+    _, width = white_image_diff.shape
+    fft_x = np.fft.fft(white_image_diff, axis=1) / np.sqrt(width)
+    fft_mean_x = get_power_spectrum(fft_x, axis=1)
+    plt.title("Horizontal Spectrogram PRNU")
+    plt.legend(loc='upper left')
+
+    plt.semilogy(fft_mean_x[:len(fft_mean_x) // 2], label="spectrogram")
+    plt.semilogy([0, len(fft_mean_x) // 2], [white_temporal_std_stack, white_temporal_std_stack], "g--", label="temp. std")
+    plt.semilogy([0, len(fft_mean_x) // 2], [PRNU, PRNU], "r--", label="spat. std")
+
+    plt.xlabel('frequency')
+    plt.ylabel('standard deviation (%)')
+
+    plt.show()
+
 
 def main():
     #plot_mean_of_photons()
     system_gain, saturation_index, variance_dark_signal = plot_photon_transfer()
-    quantum_efficiency = plot_sensivity(system_gain, saturation_index)
-    plot_SNR(system_gain, quantum_efficiency, variance_dark_signal)
+    #quantum_efficiency = plot_sensivity(system_gain, saturation_index)
+    #plot_SNR(system_gain, quantum_efficiency, variance_dark_signal)
+    aufgabe3(system_gain)
 
 if __name__ == '__main__':
     main()
