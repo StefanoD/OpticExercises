@@ -167,7 +167,7 @@ def plot_photon_transfer():
 
     plt.title("Photon transfer")
 
-    #plt.show()
+    plt.show()
     plt.clf()
 
     return system_gain, saturation_index, dark_signal
@@ -239,7 +239,7 @@ def plot_sensivity(system_gain, saturation_index):
 
     plt.title("Sensitivity")
 
-    #plt.show()
+    plt.show()
     plt.clf()
 
     return quantum_efficiency
@@ -294,10 +294,9 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
 
     # Berechne minimale Bestrahlungsstärke mit SNR = 1
     variance_dark_gray_value = get_variance_of_dark_gray_values()
-    # Skript 2, S. 22
-    computed_snr_1 = (1 / quantum_efficiency) * (variance_dark_gray_value[0] / system_gain + 0.5)
+    minimum_irradiation = libcore.get_minimum_irradiation(quantum_efficiency, variance_dark_gray_value[0], system_gain)
 
-    plt.loglog([computed_snr_1, computed_snr_1], plt.ylim(),
+    plt.loglog([minimum_irradiation, minimum_irradiation], plt.ylim(),
                color='red', linewidth=1.5, linestyle="--")
 
     # Berechne theoretische SNR-Kurve
