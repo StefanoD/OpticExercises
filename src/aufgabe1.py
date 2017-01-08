@@ -313,6 +313,11 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
 
     plt.legend(loc='upper left')
 
+    irradiation_sat = mean_of_photons_for_texp[saturation_index]
+    dynamic_range = 20 * np.log10(irradiation_sat / minimum_irradiation)
+
+    print("Dynamic Range: {} dB".format(dynamic_range))
+
     plt.show()
 
 def main():
