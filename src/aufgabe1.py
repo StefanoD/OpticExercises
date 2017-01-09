@@ -161,13 +161,13 @@ def plot_photon_transfer():
 
     # Dunkel-Signal und System Gain in Plot einfügen
     stderr_percent = stderr / system_gain * 100
-    plt.text(65, -0.7, r'$\sigma^2_{{y.dark}} = {:.2f} DN^2, K = {:.4} \pm {:.2}\%$'.format(dark_signal,
+    plt.text(65, -0.7, r'$\sigma^2_{{y.dark}} = {:.2f} DN^2, K = {:.4} \pm {:.2}\%$'.format(variance_dark_gray_value[0],
                                                                                             system_gain,
                                                                                             stderr_percent))
 
     plt.title("Photon transfer")
 
-    #plt.show()
+    plt.show()
     plt.clf()
 
     return system_gain, saturation_index, dark_signal
@@ -320,8 +320,14 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
 
     plt.show()
 
-def get_power_spectrum(fft, axis=1):
-    return np.sqrt((1 / fft.shape[~axis]) * np.sum((fft * np.conj(fft)), axis=~axis))
+
+def get_power_spectrum(fft, axis):
+    if axis == 0:
+        other_axis = 1
+    elif axis == 1:
+        other_axis = 0
+
+    return np.sqrt((1 / fft.shape[other_axis]) * np.sum((fft * np.conj(fft)), axis=other_axis))
 
 
 def aufgabe3(system_gain):
@@ -335,10 +341,12 @@ def aufgabe3(system_gain):
 
     dark_temporal_variance_matrix = np.sum((closed_images - dark_image) ** 2, axis=0) / (len(dark_image) - 1)
     dark_temporal_variance_stack = dark_temporal_variance_matrix.mean()
+    dark_temporal_std_stack = np.sqrt(dark_temporal_variance_stack)
 
     corrected_dark_spatial_variance = dark_image_variance - (dark_temporal_variance_stack / len(path_closed))
+    corrected_dark_spatial_std = np.sqrt(corrected_dark_spatial_variance)
 
-    DSNU = corrected_dark_spatial_variance / system_gain
+    DSNU = corrected_dark_spatial_std / system_gain
 
     print("DSNU: {:.2f} electrons".format(DSNU))
 
@@ -354,19 +362,19 @@ def aufgabe3(system_gain):
     white_temporal_std_stack = np.sqrt(white_temporal_variance_stack)
 
     corrected_white_spatial_variance = white_image_variance - (white_temporal_variance_stack / len(open_images))
-    corrected_white_spatial_std = np.sqrt(corrected_white_spatial_variance)
 
     PRNU = np.sqrt(corrected_white_spatial_variance - corrected_dark_spatial_variance) / (white_image_mean - dark_image_mean)
     print("PRNU: {:.2f}%".format(PRNU))
 
     """Spektrogramme berechnen"""
     white_image_diff = white_image - white_image_mean
-    dark_image_diff = dark_image - dark_image_mean
 
-    """Weiß PRNU"""
-    _, width = white_image_diff.shape
-    fft_x = np.fft.fft(white_image_diff, axis=1) / np.sqrt(width)
-    fft_mean_x = get_power_spectrum(fft_x, axis=1)
+    """Weiß Horizontal-PRNU"""
+    axis = 1
+    height, width = white_image_diff.shape
+    fft_1D = np.fft.fft(white_image_diff, axis=axis) / np.sqrt(np.size(white_image_diff, axis=axis))
+    fft_mean_x = get_power_spectrum(fft_1D, axis=axis)
+    plt.figure(1)
     plt.title("Horizontal Spectrogram PRNU")
     plt.legend(loc='upper left')
 
@@ -376,6 +384,51 @@ def aufgabe3(system_gain):
 
     plt.xlabel('frequency')
     plt.ylabel('standard deviation (%)')
+
+    """Weiß Vertikal-PRNU"""
+    axis = 0
+    fft_1D = np.fft.fft(white_image_diff, axis=axis) / np.sqrt(np.size(white_image_diff, axis=axis))
+    fft_mean_x = get_power_spectrum(fft_1D, axis=axis)
+    plt.figure(2)
+    plt.title("Vertical Spectrogram PRNU")
+    plt.legend(loc='upper left')
+
+    plt.semilogy(fft_mean_x[:len(fft_mean_x) // 2], label="spectrogram")
+    plt.semilogy([0, len(fft_mean_x) // 2], [white_temporal_std_stack, white_temporal_std_stack], "g--", label="temp. std")
+    plt.semilogy([0, len(fft_mean_x) // 2], [PRNU, PRNU], "r--", label="spat. std")
+
+    plt.xlabel('frequency')
+    plt.ylabel('standard deviation (%)')
+
+    """Spektrogramm DSNU Horizontal"""
+    axis = 1
+    dark_image_diff = dark_image - dark_image_mean
+    dark_fft_hor = np.fft.fft(dark_image_diff, axis=axis) / np.sqrt(np.size(white_image_diff, axis=axis))
+    p_dark_hor = get_power_spectrum(dark_fft_hor, axis=axis)
+    plt.figure(3)
+    plt.title("Horizontal Spectrogram DSNU")
+    plt.yscale("log")
+    plt.plot(p_dark_hor[:len(p_dark_hor) // 2])
+    plt.plot([0, len(p_dark_hor) // 2], [dark_temporal_std_stack, dark_temporal_std_stack], "g--")
+    plt.plot([0, len(p_dark_hor) // 2], [corrected_dark_spatial_std, corrected_dark_spatial_std], "r--")
+
+    plt.xlabel('frequency')
+    plt.ylabel('standard deviation (DN)')
+
+    """Spektrogramm DSNU Vertikal"""
+    axis = 0
+    dark_image_diff = dark_image - dark_image_mean
+    dark_fft_hor = np.fft.fft(dark_image_diff, axis=axis) / np.sqrt(np.size(white_image_diff, axis=axis))
+    p_dark_hor = get_power_spectrum(dark_fft_hor, axis=axis)
+    plt.figure(4)
+    plt.title("Vertical Spectrogram DSNU")
+    plt.yscale("log")
+    plt.plot(p_dark_hor[:len(p_dark_hor) // 2])
+    plt.plot([0, len(p_dark_hor) // 2], [dark_temporal_std_stack, dark_temporal_std_stack], "g--")
+    plt.plot([0, len(p_dark_hor) // 2], [corrected_dark_spatial_std, corrected_dark_spatial_std], "r--")
+
+    plt.xlabel('frequency')
+    plt.ylabel('standard deviation (DN)')
 
     plt.show()
 
