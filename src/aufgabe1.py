@@ -481,15 +481,6 @@ def aufgabe3_4(system_gain):
 
     plt.show()
 
-def y_func(val, min, I, L):
-    y = min + (I - 1) / (2 * L) + q_func(val, I, min) * I / L
-
-    return y
-
-def q_func(y, I, min):
-    q = np.floor((y - min) / I)
-
-    return q
 
 def main():
     #plot_mean_of_photons()
