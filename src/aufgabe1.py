@@ -509,8 +509,8 @@ def aufgabe3_4(system_gain):
 def main():
     #plot_mean_of_photons()
     system_gain, saturation_index, variance_dark_signal = plot_photon_transfer()
-    #quantum_efficiency = plot_sensivity(system_gain, saturation_index)
-    #plot_SNR(system_gain, quantum_efficiency, variance_dark_signal)
+    quantum_efficiency = plot_sensivity(system_gain, saturation_index)
+    plot_SNR(system_gain, quantum_efficiency, variance_dark_signal)
     aufgabe3_4(system_gain)
 
 if __name__ == '__main__':
