@@ -451,13 +451,12 @@ def aufgabe3_4(system_gain):
 
     x_left = norm.ppf(0.000000001, mean_highpass, total_variance)
     x_right = norm.ppf(0.999999999, mean_highpass, total_variance)
-    x = np.linspace(x_left, x_right, 400)
+    x = np.linspace(x_left, x_right, 200)
     max_val = np.max(np.histogram(highpass_flattend)[0])
 
     """ Schwellwert definieren """
     threshold = norm.ppf(0.0000000000001, mean_highpass, total_variance)
 
-    std_highpass = np.sqrt(variance_highpass)
     print("mean highpass: {}".format(mean_highpass))
     print("threshold: {}".format(threshold))
 
@@ -467,27 +466,17 @@ def aufgabe3_4(system_gain):
 
     plt.plot(x, fit_data, 'r-', lw=5, alpha=0.6, label='norm pdf')
 
-    """
-    M, N = white_image.shape
-    s_nw = dark_image_variance
-    std_nw = np.sqrt(s_nw)
-
-    y_vals = y_func(highpass_image, min_val, I, L)
-    print(y_vals)
-
-    gauss = I / L * N * M / (np.sqrt(2 * np.pi) * std_nw) * np.exp(-1 * y_vals / (2 * s_nw))
-
-    print("Gaus:")
-    print(gauss)
-    plt.plot(x, gauss, 'r-', lw=5, alpha=0.6, label='norm pdf')"""
-
-    dead_pixels_image = np.where(highpass_image < threshold)
+    dead_pixels_image_low = np.where(highpass_image < threshold)
+    dead_pixels_image_high = np.where(highpass_image > abs(threshold))
 
     fig = plt.figure(6)
     ax = fig.gca()
     plt.imshow(highpass_image, cmap=plt.get_cmap("Greys"))
 
-    for y, x in zip(*dead_pixels_image):
+    for y, x in zip(*dead_pixels_image_low):
+        ax.add_patch(Circle((x, y), 5))
+
+    for y, x in zip(*dead_pixels_image_high):
         ax.add_patch(Circle((x, y), 5))
 
     plt.show()
