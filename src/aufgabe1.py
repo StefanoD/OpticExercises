@@ -4,6 +4,9 @@ import numpy as np
 
 from os.path import join
 from scipy import stats
+from scipy.ndimage import uniform_filter
+from scipy.stats import norm
+from matplotlib.patches import Circle
 
 """Berechnete Bestrahlungsstärke E. Siehe Rechnung in Ordner MessungenAufgabe_1-2"""
 IRRADIANCE_WATT_PER_SQUARE_METER = 0.121705797795879
@@ -431,10 +434,73 @@ def aufgabe3_4(system_gain):
     plt.ylabel('standard deviation (DN)')
 
     # Aufgabe 4
+    white_dark_image_diff = white_image - dark_image
+    lowpass_image = uniform_filter(white_dark_image_diff, 5)
+    highpass_image = white_dark_image_diff - lowpass_image
 
+    highpass_flattend = highpass_image.flatten()
+
+    plt.figure(5)
+    plt.title("Logarithmic histogram PRNU")
+    plt.yscale("log")
+    plt.hist(highpass_flattend, bins=255)
+
+    variance_highpass = np.var(highpass_flattend)
+    total_variance = white_temporal_variance_stack + variance_highpass
+    mean_highpass = np.mean(highpass_flattend)
+
+    x_left = norm.ppf(0.000000001, mean_highpass, total_variance)
+    x_right = norm.ppf(0.999999999, mean_highpass, total_variance)
+    x = np.linspace(x_left, x_right, 400)
+    max_val = np.max(np.histogram(highpass_flattend)[0])
+
+    """ Schwellwert definieren """
+    threshold = norm.ppf(0.0000000000001, mean_highpass, total_variance)
+
+    std_highpass = np.sqrt(variance_highpass)
+    print("mean highpass: {}".format(mean_highpass))
+    print("threshold: {}".format(threshold))
+
+    fit_data = norm.pdf(x, mean_highpass, total_variance)
+    max_val_fit = np.max(fit_data)
+    fit_data *= (max_val / max_val_fit)
+
+    plt.plot(x, fit_data, 'r-', lw=5, alpha=0.6, label='norm pdf')
+
+    """
+    M, N = white_image.shape
+    s_nw = dark_image_variance
+    std_nw = np.sqrt(s_nw)
+
+    y_vals = y_func(highpass_image, min_val, I, L)
+    print(y_vals)
+
+    gauss = I / L * N * M / (np.sqrt(2 * np.pi) * std_nw) * np.exp(-1 * y_vals / (2 * s_nw))
+
+    print("Gaus:")
+    print(gauss)
+    plt.plot(x, gauss, 'r-', lw=5, alpha=0.6, label='norm pdf')"""
+
+    dead_pixels_image = np.where(highpass_image < threshold)
+
+    fig = plt.figure(6)
+    ax = fig.gca()
+    plt.imshow(highpass_image, cmap=plt.get_cmap("Greys"))
+
+    for y, x in zip(*dead_pixels_image):
+        ax.add_patch(Circle((x, y), 5))
 
     plt.show()
 
+def y_func(val, min, I, L):
+    y = min + (I - 1) / (2 * L) + q_func(val, I, min) * I / L
+
+    return y
+
+def q_func(y, I, min):
+    q = np.floor((y - min) / I)
+
+    return q
 
 def main():
     #plot_mean_of_photons()
