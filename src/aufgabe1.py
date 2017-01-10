@@ -466,17 +466,41 @@ def aufgabe3_4(system_gain):
 
     plt.plot(x, fit_data, 'r-', lw=5, alpha=0.6, label='norm pdf')
 
-    dead_pixels_image_low = np.where(highpass_image < threshold)
-    dead_pixels_image_high = np.where(highpass_image > abs(threshold))
+    """Dead Pixel ermitteln"""
+
+    dead_pixel_positions_low = np.where(highpass_image < threshold)
+    dead_pixel_positions_high = np.where(highpass_image > abs(threshold))
 
     fig = plt.figure(6)
+    plt.title("Dead Pixel")
     ax = fig.gca()
     plt.imshow(highpass_image, cmap=plt.get_cmap("Greys"))
 
-    for y, x in zip(*dead_pixels_image_low):
+    for y, x in zip(*dead_pixel_positions_low):
         ax.add_patch(Circle((x, y), 5))
 
-    for y, x in zip(*dead_pixels_image_high):
+    for y, x in zip(*dead_pixel_positions_high):
+        ax.add_patch(Circle((x, y), 5))
+
+
+    """DSNU"""
+    plt.figure(7)
+    plt.title("Logarithmic DSNU histogram")
+    plt.yscale("log")
+    plt.hist(dark_image.flatten(), bins=256)
+
+    """Hot Pixel ermitteln"""
+
+    threshold = 7
+
+    fig = plt.figure(8)
+    ax = fig.gca()
+    plt.title("Hot Pixels")
+    hot_pixel_positions = np.where(dark_image > threshold)
+
+    plt.imshow(dark_image, cmap=plt.get_cmap("Greys"))
+
+    for y, x in zip(*hot_pixel_positions):
         ax.add_patch(Circle((x, y), 5))
 
     plt.show()
