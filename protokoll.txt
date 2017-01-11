@@ -1,0 +1,13 @@
+Bild 1:
+
+Blende: 1,4
+Sättigung: 50%
+Fokussierung: Unendlich
+Belichtungszeit: 18,9 ms
+
+Bild 2:
+
+Blende: 4
+Mittelwert: 59
+Fokussierung: Unendlich
+Belichtungszeit: 39.984 ms
