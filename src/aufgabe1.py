@@ -304,6 +304,7 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
 
     # Berechne theoretische SNR-Kurve
     # Skript 2, S. 18
+    # TODO
     snr_theory_values = mean_of_photons_for_texp * quantum_efficiency / np.sqrt(variance_dark_signal + (QUANTIZATION_NOISE / (system_gain ** 2)) +
                               quantum_efficiency * mean_of_photons_for_texp)
 
@@ -474,6 +475,7 @@ def aufgabe3_4(system_gain):
     fig = plt.figure(6)
     plt.title("Dead Pixel")
     ax = fig.gca()
+    # TODO White image zeigen
     plt.imshow(highpass_image, cmap=plt.get_cmap("Greys"))
 
     for y, x in zip(*dead_pixel_positions_low):
