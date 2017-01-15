@@ -88,6 +88,19 @@ def get_mean_of_two_images(images):
     return mean_list
 
 
+def interpolate_dark_image(dark1, t1, dark2, t2, t_new):
+    if t_new > t2:
+        raise RuntimeError("t_new should be <= t2")
+
+    """Skript 3, S. 24"""
+    dark_new = ((t2 - t_new) / (t2 - t1)) * dark1 + ((t_new - t1) / (t2 - t1)) * dark2
+
+    return dark_new
+
+def flat_field(image, dark_image, image_50):
+    """Skript 3, S. 25"""
+    return np.mean(image_50) * (image - dark_image) / image_50
+
 def get_radiation_energy(area, irradiance, exposure_time):
     """Liefert die Strahlungsenergie"""
     # Skript 2, S. 5

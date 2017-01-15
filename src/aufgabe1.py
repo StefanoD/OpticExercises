@@ -507,6 +507,31 @@ def aufgabe3_4(system_gain):
 
     plt.show()
 
+def aufgabe5():
+    "MessungenAufgabe3/geschlossen"
+    # ../MessungenAufgabe_5/geschlossen/*
+    path_closed = join(join(join("..", "MessungenAufgabe3"), "geschlossen"), "*")
+    closed_images = np.array(libcore.get_sorted_images(path_closed))
+    dark_image1 = closed_images.mean(axis=0)
+    t1_dark_MS = 6.138
+
+    """Zweites Dark Image"""
+    dark_image2 = None
+    t2_dark_MS = 25
+
+    """Test Image"""
+    t_test_image = 20
+
+    # ../MessungenAufgabe_5/offen/*
+    path_open = join(join(join("..", "MessungenAufgabe5"), "offen", "*"))
+    open_images = np.array(libcore.get_sorted_images(path_open))
+    white_image = open_images.mean(axis=0)
+
+    image_50 = white_image - dark_image1
+
+    dark_interpolated = libcore.interpolate_dark_image(dark_image1, t1_dark_MS, dark_image2, t2_dark_MS, t_test_image)
+
+    flat_field_image = libcore.flat_field(None, dark_interpolated, image_50)
 
 def main():
     #plot_mean_of_photons()
