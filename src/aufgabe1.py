@@ -507,7 +507,7 @@ def aufgabe3_4(system_gain):
 
     plt.show()
 
-def aufgabe5():
+def aufgabe5(dead_pixels):
     """Erstes Dark Image"""
     "MessungenAufgabe3/geschlossen"
     # ../MessungenAufgabe_3/geschlossen/*
@@ -539,6 +539,9 @@ def aufgabe5():
     dark_interpolated = libcore.interpolate_dark_image(dark_image1, t1_dark_MS, dark_image2, t2_dark_MS, t_test_image_MS)
 
     flat_field_image = libcore.flat_field(test_image, dark_interpolated, image_50)
+
+    """ Interpolated Dead Pixels"""
+    interpolate_dead_pixels_image = libcore.interpolate_dead_pixels(flat_field_image, dead_pixels)
 
 def main():
     #plot_mean_of_photons()
