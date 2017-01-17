@@ -507,6 +507,8 @@ def aufgabe3_4(system_gain):
 
     plt.show()
 
+    return dead_pixel_positions_low
+
 def aufgabe5(dead_pixels):
     """Erstes Dark Image"""
     "MessungenAufgabe3/geschlossen"
@@ -521,12 +523,12 @@ def aufgabe5(dead_pixels):
     path_closed = join(join(join("..", "MessungenAufgabe5"), "geschlossen"), "*")
     closed_images = np.array(libcore.get_sorted_images(path_closed))
     dark_image2 = closed_images.mean(axis=0)
-    t2_dark_MS = 25
+    t2_dark_MS = 165
 
     """Test Image"""
     test_image_path = join(join(join("..", "MessungenAufgabe5"), "testimage"), "*")
-    test_image = np.array(libcore.get_sorted_images(test_image_path))
-    t_test_image_MS = 20
+    test_image = np.array(libcore.get_sorted_images(test_image_path)[0])
+    t_test_image_MS = 80
 
     """White Image"""
     # ../MessungenAufgabe_5/offen/*
@@ -548,7 +550,8 @@ def main():
     system_gain, saturation_index, variance_dark_signal = plot_photon_transfer()
     quantum_efficiency = plot_sensivity(system_gain, saturation_index)
     plot_SNR(system_gain, quantum_efficiency, variance_dark_signal)
-    aufgabe3_4(system_gain)
+    dead_pixels = aufgabe3_4(system_gain)
+    aufgabe5(dead_pixels)
 
 if __name__ == '__main__':
     main()
