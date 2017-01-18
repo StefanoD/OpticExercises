@@ -304,8 +304,7 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
 
     # Berechne theoretische SNR-Kurve
     # Skript 2, S. 18
-    # TODO
-    snr_theory_values = mean_of_photons_for_texp * quantum_efficiency / np.sqrt(variance_dark_signal + (QUANTIZATION_NOISE / (system_gain ** 2)) +
+    snr_theory_values = (mean_of_photons_for_texp * quantum_efficiency) / np.sqrt(variance_dark_signal + (QUANTIZATION_NOISE / (system_gain ** 2)) +
                               quantum_efficiency * mean_of_photons_for_texp)
 
     plt.loglog(mean_of_photons_for_texp, snr_theory_values, label="theor. limit")
