@@ -110,6 +110,8 @@ def get_radiation_energy(area, irradiance, exposure_time):
 def interpolate_dead_pixels(image, dead_pixels):
     height, width = image.shape
 
+    image_new = image.copy()
+
     for y, x in zip(*dead_pixels):
         # Oben
         val1 = image[y - 1, x] if y - 1 > 0 else 0
@@ -123,7 +125,9 @@ def interpolate_dead_pixels(image, dead_pixels):
         # Links
         val4 = image[y, x - 1] if x - 1 > 0 else 0
 
-        image[y, x] = (val1 + val2 + val3 + val4) / 4.0
+        image_new[y, x] = (val1 + val2 + val3 + val4) / 4.0
+
+    return image_new
 
 def get_mean_of_photons(area, irradiance, exposure_time, wavelength):
     """

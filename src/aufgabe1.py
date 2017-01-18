@@ -545,6 +545,29 @@ def aufgabe5(dead_pixels):
     """ Interpolated Dead Pixels"""
     interpolate_dead_pixels_image = libcore.interpolate_dead_pixels(flat_field_image, dead_pixels)
 
+    """Show Images"""
+    plt.figure(1)
+    plt.title("Weißbild")
+    plt.imshow(white_image, cmap=plt.get_cmap("Greys"))
+
+    plt.figure(2)
+    plt.title("Korrigiertes Weißbild")
+    plt.imshow(image_50, cmap=plt.get_cmap("Greys"))
+
+    plt.figure(3)
+    plt.title("Original Test-Chart")
+    plt.imshow(test_image, cmap=plt.get_cmap("Greys"))
+
+    plt.figure(4)
+    plt.title("Kalibrierter Test-Chart")
+    plt.imshow(flat_field_image, cmap=plt.get_cmap("Greys"))
+
+    plt.figure(5)
+    plt.title("Kalibrierter Test-Chart mit Dead-Pixel-Interpolation")
+    plt.imshow(interpolate_dead_pixels_image, cmap=plt.get_cmap("Greys"))
+
+    plt.show()
+
 def main():
     #plot_mean_of_photons()
     system_gain, saturation_index, variance_dark_signal = plot_photon_transfer()
