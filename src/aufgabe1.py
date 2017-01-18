@@ -503,6 +503,7 @@ def aufgabe3_4(system_gain):
     for y, x in zip(*hot_pixel_positions):
         ax.add_patch(Circle((x, y), 5))
 
+    """Weißbild"""
     plt.figure(9)
     plt.title("White Image")
     plt.imshow(white_image, cmap=plt.get_cmap("Greys"))
