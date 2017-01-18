@@ -15,7 +15,7 @@ IRRADIANCE_WATT_PER_SQUARE_METER = 0.121705797795879
 WAVELENGTH_METER = 0.000000525
 
 """Pixelgröße aus Datenblatt entnommen"""
-PIXEL_AREA_METER = 0.0000045 ** 2
+PIXEL_AREA_METER = (4.5 * 10 ** (-6)) ** 2
 
 TIME_OF_EXPOSURE_MS = [0.02,
                        1.645,
@@ -257,7 +257,7 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
 
     variance_gray_value = get_variance_gray_values()
 
-    snr_matrix = mean_gray_value_without_dark_noise / variance_gray_value
+    snr_matrix = mean_gray_value_without_dark_noise / np.sqrt(variance_gray_value)
     mean_of_photons_for_texp = get_mean_of_photons_per_pixel_and_exposure_time()
 
     snr_ideal_matrix = np.sqrt(mean_of_photons_for_texp)
