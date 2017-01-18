@@ -258,9 +258,9 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
     variance_gray_value = get_variance_gray_values()
 
     snr_matrix = mean_gray_value_without_dark_noise / variance_gray_value
-    snr_ideal_matrix = np.sqrt(mean_gray_value_without_dark_noise)
-
     mean_of_photons_for_texp = get_mean_of_photons_per_pixel_and_exposure_time()
+
+    snr_ideal_matrix = np.sqrt(mean_of_photons_for_texp)
 
     # Plotte mittlere Grauwerte und Varianz ohne Dunkelstrom
     plt.loglog(mean_of_photons_for_texp, snr_matrix, 'ro', label="Measurements")
