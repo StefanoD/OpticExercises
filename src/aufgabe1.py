@@ -511,7 +511,7 @@ def aufgabe3_4(system_gain):
 
 def aufgabe5(dead_pixels):
     """Erstes Dark Image"""
-    "MessungenAufgabe3/geschlossen"
+    """MessungenAufgabe3/geschlossen"""
     # ../MessungenAufgabe_3/geschlossen/*
     path_closed = join(join(join("..", "MessungenAufgabe3"), "geschlossen"), "*")
     closed_images = np.array(libcore.get_sorted_images(path_closed))
