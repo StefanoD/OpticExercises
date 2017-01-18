@@ -475,7 +475,6 @@ def aufgabe3_4(system_gain):
     fig = plt.figure(6)
     plt.title("Dead Pixel")
     ax = fig.gca()
-    # TODO White image zeigen
     plt.imshow(highpass_image, cmap=plt.get_cmap("Greys"))
 
     for y, x in zip(*dead_pixel_positions_low):
@@ -483,7 +482,6 @@ def aufgabe3_4(system_gain):
 
     for y, x in zip(*dead_pixel_positions_high):
         ax.add_patch(Circle((x, y), 5))
-
 
     """DSNU"""
     plt.figure(7)
@@ -504,6 +502,10 @@ def aufgabe3_4(system_gain):
 
     for y, x in zip(*hot_pixel_positions):
         ax.add_patch(Circle((x, y), 5))
+
+    plt.figure(9)
+    plt.title("White Image")
+    plt.imshow(white_image, cmap=plt.get_cmap("Greys"))
 
     plt.show()
 
