@@ -23,10 +23,10 @@ def get_dark_signal(sigma_dark_min, sigma_quantization_noise, system_gain):
     return (sigma_dark_min - sigma_quantization_noise) / (system_gain ** 2)
 
 
-def get_minimum_irradiation(quantum_efficiency, variance_dark_noise, system_gain):
+def get_minimum_irradiation(quantum_efficiency, std_dark_noise, system_gain):
     """Berechnet die kleinste nutzbare Bestrahlungsstärke"""
     # Skript 2, S. 22
-    minimum_irradiation = (1 / quantum_efficiency) * (variance_dark_noise / system_gain + 0.5)
+    minimum_irradiation = (1 / quantum_efficiency) * (std_dark_noise / system_gain + 0.5)
 
     return minimum_irradiation
 

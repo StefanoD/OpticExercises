@@ -169,6 +169,7 @@ def plot_photon_transfer():
                                                                                             stderr_percent))
 
     plt.title("Photon transfer")
+    plt.savefig("../plots/Photon_Transfer.png")
 
     plt.show()
     plt.clf()
@@ -237,10 +238,12 @@ def plot_sensivity(system_gain, saturation_index):
 
     # Dunkel-Bild bei kleinstmöglichester Belichtungszeit hinzufügen
     quantum_efficiency = responsivity / system_gain
-    plt.text(37000, 10, r'$\mu_{{y.dark}} = {:.2f} DN, \eta = {:.2f}$'.format(mean_dark_grey_values[0],
-                                                                              quantum_efficiency))
+    plt.text(37000, 10, r'$\mu_{{y.dark}} = {:.2f} DN, R = {:.2E}, \eta = {:.2f}$'.format(mean_dark_grey_values[0],
+                                                                                          responsivity,
+                                                                                          quantum_efficiency))
 
     plt.title("Sensitivity")
+    plt.savefig("../plots/Sensivity.png")
 
     plt.show()
     plt.clf()
@@ -269,8 +272,22 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
 
     plt.loglog(mean_of_photons_for_texp, snr_ideal_matrix, label="Ideal SNR")
 
-    # Sättingspunkt ist an der Stelle der maximalen Varianz
-    saturation_index = np.argmax(snr_matrix)
+    # Sättingspunkt ist an der Stelle der maximalen Varianz. Vorsicht: Von hinten suchen!
+    saturation_index = len(snr_matrix) - np.argmax(snr_matrix[::-1]) - 1
+
+    # Sättingungspunkt im Plot einzeichnen
+    saturation_x_coord = mean_of_photons_for_texp[saturation_index]
+    saturation_y_coord = snr_matrix[saturation_index]
+
+    plt.annotate('Saturation', xy=(saturation_x_coord, saturation_y_coord),
+                 xycoords='data',
+                 xytext=(-110, -20),
+                 textcoords='offset points',
+                 fontsize=16,
+                 arrowprops=dict(arrowstyle="->", connectionstyle="arc3,rad=.2"))
+
+    plt.plot([saturation_x_coord, saturation_x_coord], [1, saturation_y_coord],
+             color='blue', linewidth=1.5, linestyle="--", label="Saturation")
 
     # Lineare Regeression der steigenden Varianz bilden.
     # Die Sättigung soll dabei nicht miteinfließen.
@@ -286,21 +303,24 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
 
     # Interpolation der gemessenen Punkte.
     from scipy.interpolate import interp1d
+    f2 = interp1d(irradiation_without_sat, snr_without_sat, kind='cubic')
 
-    new_x = np.insert(irradiation_without_sat, 0, 0)
-    new_y = np.insert(snr_without_sat, 0, 0)
-
-    f2 = interp1d(new_x, new_y, kind='cubic')
-
-    new_x2 = np.insert(irradiation_without_sat, 0, 1)
-    plt.loglog(new_x2, f2(new_x2), '--', label="fit")
+    #new_x2 = np.insert(irradiation_without_sat, 0, 1)
+    plt.loglog(irradiation_without_sat, f2(irradiation_without_sat), '--', label="fit")
 
     # Berechne minimale Bestrahlungsstärke mit SNR = 1
     variance_dark_gray_value = get_variance_of_dark_gray_values()
-    minimum_irradiation = libcore.get_minimum_irradiation(quantum_efficiency, variance_dark_gray_value[0], system_gain)
+    minimum_irradiation = libcore.get_minimum_irradiation(quantum_efficiency, np.sqrt(variance_dark_gray_value[0]), system_gain)
 
     plt.loglog([minimum_irradiation, minimum_irradiation], plt.ylim(),
                color='red', linewidth=1.5, linestyle="--")
+
+    plt.annotate('Threshold SNR = 1', xy=(minimum_irradiation, plt.ylim()[1] / 2),
+                 xycoords='data',
+                 xytext=(30, 0),
+                 textcoords='offset points',
+                 fontsize=16,
+                 arrowprops=dict(arrowstyle="->", connectionstyle="arc3,rad=.2"))
 
     # Berechne theoretische SNR-Kurve
     # Skript 2, S. 18
@@ -314,7 +334,8 @@ def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
 
     plt.title("SNR")
 
-    plt.legend(loc='upper left')
+    plt.legend(loc='lower right')
+    plt.savefig("../plots/SNR.png")
 
     irradiation_sat = mean_of_photons_for_texp[saturation_index]
     dynamic_range = 20 * np.log10(irradiation_sat / minimum_irradiation)
@@ -374,34 +395,37 @@ def aufgabe3_4(system_gain):
 
     """Weiß Horizontal-PRNU"""
     axis = 1
-    height, width = white_image_diff.shape
     fft_1D = np.fft.fft(white_image_diff, axis=axis) / np.sqrt(np.size(white_image_diff, axis=axis))
     fft_mean_1D = get_power_spectrum(fft_1D, axis=axis)
     plt.figure(1)
-    plt.title("Horizontal Spectrogram PRNU")
-    plt.legend(loc='upper left')
-
-    plt.semilogy(fft_mean_1D[:len(fft_mean_1D) // 2], label="spectrogram")
-    plt.semilogy([0, len(fft_mean_1D) // 2], [white_temporal_std_stack, white_temporal_std_stack], "g--", label="temp. std")
-    plt.semilogy([0, len(fft_mean_1D) // 2], [PRNU, PRNU], "r--", label="spat. std")
-
     plt.xlabel('frequency')
     plt.ylabel('standard deviation (%)')
+    plt.yscale("log")
+    plt.title("Horizontal Spectrogram PRNU")
+
+    plt.plot(fft_mean_1D[:len(fft_mean_1D) // 2], label="spectrogram")
+    plt.plot([0, len(fft_mean_1D) // 2], [white_temporal_std_stack, white_temporal_std_stack], "g--", label="temp. std: {:.2f}%".format(white_temporal_std_stack))
+    plt.plot([0, len(fft_mean_1D) // 2], [PRNU, PRNU], "r--", label="spat. std: {:.2f} DN".format(PRNU))
+
+    plt.legend(loc='upper left')
+    plt.savefig("../plots/PRNU_hor.png")
 
     """Weiß Vertikal-PRNU"""
     axis = 0
     fft_1D = np.fft.fft(white_image_diff, axis=axis) / np.sqrt(np.size(white_image_diff, axis=axis))
     fft_mean_1D = get_power_spectrum(fft_1D, axis=axis)
     plt.figure(2)
-    plt.title("Vertical Spectrogram PRNU")
-    plt.legend(loc='upper left')
-
-    plt.semilogy(fft_mean_1D[:len(fft_mean_1D) // 2], label="spectrogram")
-    plt.semilogy([0, len(fft_mean_1D) // 2], [white_temporal_std_stack, white_temporal_std_stack], "g--", label="temp. std")
-    plt.semilogy([0, len(fft_mean_1D) // 2], [PRNU, PRNU], "r--", label="spat. std")
-
     plt.xlabel('frequency')
     plt.ylabel('standard deviation (%)')
+    plt.yscale("log")
+    plt.title("Vertical Spectrogram PRNU")
+
+    plt.plot(fft_mean_1D[:len(fft_mean_1D) // 2], label="spectrogram")
+    plt.plot([0, len(fft_mean_1D) // 2], [white_temporal_std_stack, white_temporal_std_stack], "g--", label="temp. std: {:.2f}%".format(white_temporal_std_stack))
+    plt.plot([0, len(fft_mean_1D) // 2], [PRNU, PRNU], "r--", label="spat. std: {:.2f} DN".format(PRNU))
+
+    plt.legend(loc='upper left')
+    plt.savefig("../plots/PRNU_vert.png")
 
     """Spektrogramm DSNU Horizontal"""
     axis = 1
@@ -409,14 +433,16 @@ def aufgabe3_4(system_gain):
     fft_1D = np.fft.fft(dark_image_diff, axis=axis) / np.sqrt(np.size(white_image_diff, axis=axis))
     fft_mean_1D = get_power_spectrum(fft_1D, axis=axis)
     plt.figure(3)
-    plt.title("Horizontal Spectrogram DSNU")
+    plt.xlabel('frequency (cycles/pixel)')
+    plt.ylabel('Standard deviation (DN)')
     plt.yscale("log")
-    plt.plot(fft_mean_1D[:len(fft_mean_1D) // 2])
-    plt.plot([0, len(fft_mean_1D) // 2], [dark_temporal_std_stack, dark_temporal_std_stack], "g--")
-    plt.plot([0, len(fft_mean_1D) // 2], [corrected_dark_spatial_std, corrected_dark_spatial_std], "r--")
+    plt.title("Horizontal Spectrogram DSNU")
+    plt.plot(fft_mean_1D[:len(fft_mean_1D) // 2], label="spectrogram")
+    plt.plot([0, len(fft_mean_1D) // 2], [dark_temporal_std_stack, dark_temporal_std_stack], "g--", label="temp. std: {:.2f} DN".format(dark_temporal_std_stack))
+    plt.plot([0, len(fft_mean_1D) // 2], [corrected_dark_spatial_std, corrected_dark_spatial_std], "r--", label="spat. std: {:.2f} DN".format(corrected_dark_spatial_std))
 
-    plt.xlabel('frequency')
-    plt.ylabel('standard deviation (DN)')
+    plt.legend(loc='upper left')
+    plt.savefig("../plots/DSNU_hor.png")
 
     """Spektrogramm DSNU Vertikal"""
     axis = 0
@@ -424,14 +450,16 @@ def aufgabe3_4(system_gain):
     fft_1D = np.fft.fft(dark_image_diff, axis=axis) / np.sqrt(np.size(white_image_diff, axis=axis))
     fft_mean_1D = get_power_spectrum(fft_1D, axis=axis)
     plt.figure(4)
-    plt.title("Vertical Spectrogram DSNU")
+    plt.xlabel('frequency (cycles/pixel)')
+    plt.ylabel('Standard deviation (DN)')
     plt.yscale("log")
-    plt.plot(fft_mean_1D[:len(fft_mean_1D) // 2])
-    plt.plot([0, len(fft_mean_1D) // 2], [dark_temporal_std_stack, dark_temporal_std_stack], "g--")
-    plt.plot([0, len(fft_mean_1D) // 2], [corrected_dark_spatial_std, corrected_dark_spatial_std], "r--")
+    plt.title("Vertical Spectrogram DSNU")
+    plt.plot(fft_mean_1D[:len(fft_mean_1D) // 2], label="spectrogram")
+    plt.plot([0, len(fft_mean_1D) // 2], [dark_temporal_std_stack, dark_temporal_std_stack], "g--", label="temp. std: {:.2f} DN".format(dark_temporal_std_stack))
+    plt.plot([0, len(fft_mean_1D) // 2], [corrected_dark_spatial_std, corrected_dark_spatial_std], "r--", label="spat. std: {:.2f} DN".format(corrected_dark_spatial_std))
 
-    plt.xlabel('frequency')
-    plt.ylabel('standard deviation (DN)')
+    plt.legend(loc='upper left')
+    plt.savefig("../plots/DSNU_vert.png")
 
     # Aufgabe 4
     white_dark_image_diff = white_image - dark_image
@@ -442,8 +470,13 @@ def aufgabe3_4(system_gain):
 
     plt.figure(5)
     plt.title("Logarithmic histogram PRNU")
+    plt.legend(loc='upper left')
+    plt.xlabel('Deviation from mean(%)')
+    plt.ylabel('Number of pixel/bin')
     plt.yscale("log")
     plt.hist(highpass_flattend, bins=255)
+    plt.text(-3.5, 10 ** 3, r'$s_{{nw}} {:.2f}\% $'.format(PRNU))
+    plt.savefig("../plots/PRNU_log.png")
 
     variance_highpass = np.var(highpass_flattend)
     total_variance = white_temporal_variance_stack + variance_highpass
@@ -455,21 +488,24 @@ def aufgabe3_4(system_gain):
     max_val = np.max(np.histogram(highpass_flattend)[0])
 
     """ Schwellwert definieren """
-    threshold = norm.ppf(0.0000000000001, mean_highpass, total_variance)
+    #threshold = norm.ppf(0.0000000000001, mean_highpass, total_variance)
+    threshold = -3.6
 
     print("mean highpass: {}".format(mean_highpass))
     print("threshold: {}".format(threshold))
-
+    """
     fit_data = norm.pdf(x, mean_highpass, total_variance)
     max_val_fit = np.max(fit_data)
     fit_data *= (max_val / max_val_fit)
 
-    plt.plot(x, fit_data, 'r-', lw=5, alpha=0.6, label='norm pdf')
+    plt.plot(x, fit_data, 'r-', lw=5, alpha=0.6, label='norm pdf')"""
 
     """Dead Pixel ermitteln"""
 
     dead_pixel_positions_low = np.where(highpass_image < threshold)
     dead_pixel_positions_high = np.where(highpass_image > abs(threshold))
+
+    print("dead pixels low: ", dead_pixel_positions_low)
 
     fig = plt.figure(6)
     plt.title("Dead Pixel")
@@ -485,8 +521,12 @@ def aufgabe3_4(system_gain):
     """DSNU"""
     plt.figure(7)
     plt.title("Logarithmic DSNU histogram")
+    plt.xlabel('Deviation from mean (DN)')
+    plt.ylabel('Number of pixel/bin')
     plt.yscale("log")
     plt.hist(dark_image.flatten(), bins=256)
+    plt.text(5, 10 ** 3, r'$s_{{nw}} {:.2f} DN $'.format(corrected_dark_spatial_std))
+    plt.savefig("../plots/DSNU_log.png")
 
     """Hot Pixel ermitteln"""
 
@@ -498,14 +538,22 @@ def aufgabe3_4(system_gain):
     hot_pixel_positions = np.where(dark_image > threshold)
 
     plt.imshow(dark_image, cmap=plt.get_cmap("Greys"))
+    plt.savefig("../plots/hot_pixels.png")
 
     for y, x in zip(*hot_pixel_positions):
         ax.add_patch(Circle((x, y), 5))
 
     """Weißbild"""
     plt.figure(9)
-    plt.title("White Image")
+    plt.title("White Image without objective")
     plt.imshow(white_image, cmap=plt.get_cmap("Greys"))
+    plt.savefig("../plots/white_image_without_objective.png")
+
+    """Dunkelbild"""
+    plt.figure(10)
+    plt.title("Dark Image")
+    plt.imshow(dark_image, cmap=plt.get_cmap("Greys"))
+    plt.savefig("../plots/dark_image.png")
 
     plt.show()
 
@@ -551,22 +599,27 @@ def aufgabe5(dead_pixels):
     plt.figure(1)
     plt.title("Weißbild")
     plt.imshow(white_image, cmap=plt.get_cmap("Greys"))
+    plt.savefig("../plots/WhiteImageNotCorrected.png")
 
     plt.figure(2)
     plt.title("Korrigiertes Weißbild")
     plt.imshow(image_50, cmap=plt.get_cmap("Greys"))
+    plt.savefig("../plots/WhiteImage50Corrected.png")
 
     plt.figure(3)
     plt.title("Original Test-Chart")
     plt.imshow(test_image, cmap=plt.get_cmap("Greys"))
+    plt.savefig("../plots/TestChartOriginal.png")
 
     plt.figure(4)
     plt.title("Kalibrierter Test-Chart")
     plt.imshow(flat_field_image, cmap=plt.get_cmap("Greys"))
+    plt.savefig("../plots/TestChartCalibrated.png")
 
     plt.figure(5)
     plt.title("Kalibrierter Test-Chart mit Dead-Pixel-Interpolation")
     plt.imshow(interpolate_dead_pixels_image, cmap=plt.get_cmap("Greys"))
+    plt.savefig("../plots/TestChartCalibratedDeadPixelInterpolation.png")
 
     plt.show()
 
