@@ -518,6 +518,8 @@ def aufgabe3_4(system_gain):
     for y, x in zip(*dead_pixel_positions_high):
         ax.add_patch(Circle((x, y), 5))
 
+    plt.savefig("../plots/dead_pixels.png")
+
     """DSNU"""
     plt.figure(7)
     plt.title("Logarithmic DSNU histogram")
@@ -538,10 +540,13 @@ def aufgabe3_4(system_gain):
     hot_pixel_positions = np.where(dark_image > threshold)
 
     plt.imshow(dark_image, cmap=plt.get_cmap("Greys"))
-    plt.savefig("../plots/hot_pixels.png")
 
     for y, x in zip(*hot_pixel_positions):
         ax.add_patch(Circle((x, y), 5))
+
+    print("hot pixel positions", hot_pixel_positions)
+
+    plt.savefig("../plots/hot_pixels.png")
 
     """Weißbild"""
     plt.figure(9)

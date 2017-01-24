@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a83bc991-278b-4c68-b528-6243e41df251" name="Default" comment="SNR-Fix: Durch Std und nicht Varianz teilen!">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_0.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_10.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_11.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_12.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_13.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_14.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_15.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_7.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_8.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MessungenAufgabe5/offen/blende6_t165ms_9.png" afterPath="" />
+    <list default="true" id="a83bc991-278b-4c68-b528-6243e41df251" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plots/hot_pixels.png" afterPath="$PROJECT_DIR$/plots/hot_pixels.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/aufgabe1.py" afterPath="$PROJECT_DIR$/src/aufgabe1.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/libcore.py" afterPath="$PROJECT_DIR$/src/libcore.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -53,11 +37,11 @@
       <file leaf-file-name="aufgabe1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/aufgabe1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="336" column="31" lean-forward="false" selection-start-line="336" selection-start-column="31" selection-end-line="336" selection-end-column="31" />
+            <state relative-caret-position="506">
+              <caret line="546" column="21" lean-forward="false" selection-start-line="546" selection-start-column="21" selection-end-line="546" selection-end-column="21" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+                <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
               </folding>
             </state>
           </provider>
@@ -621,7 +605,14 @@
       <option name="project" value="LOCAL" />
       <updated>1484767033898</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="SNR-Fix und Plots gespeichert.">
+      <created>1485282029352</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1485282029352</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -669,7 +660,7 @@
     <frame x="0" y="27" width="1920" height="1173" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16728233" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16728233" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40770254" sideWeight="0.5025" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -692,7 +683,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Titel hinzu" />
     <MESSAGE value="Weitere Beschriftungen für Photon Transfer hinzu. Außerdem wird nun StdErr als Prozent angezeigt." />
     <MESSAGE value="Sensivity.&#10;Außerdem Bugfix bei der Berechnung des Dunkelsignals." />
     <MESSAGE value="Berechne Mittelwert mit weniger Schleifen." />
@@ -717,7 +707,8 @@
     <MESSAGE value="Ideal SNR Fix" />
     <MESSAGE value="SNR-Fix: Durch Std und nicht Varianz teilen!" />
     <MESSAGE value="TODO entfernt." />
-    <option name="LAST_COMMIT_MESSAGE" value="TODO entfernt." />
+    <MESSAGE value="SNR-Fix und Plots gespeichert." />
+    <option name="LAST_COMMIT_MESSAGE" value="SNR-Fix und Plots gespeichert." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -784,7 +775,7 @@
           <caret line="464" column="57" lean-forward="true" selection-start-line="464" selection-start-column="16" selection-end-line="464" selection-end-column="57" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -805,7 +796,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -826,7 +817,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -847,7 +838,7 @@
           <caret line="451" column="25" lean-forward="true" selection-start-line="451" selection-start-column="25" selection-end-line="451" selection-end-column="25" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -868,7 +859,7 @@
           <caret line="419" column="105" lean-forward="false" selection-start-line="419" selection-start-column="105" selection-end-line="419" selection-end-column="105" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -889,7 +880,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -910,7 +901,7 @@
           <caret line="304" column="28" lean-forward="false" selection-start-line="304" selection-start-column="28" selection-end-line="304" selection-end-column="28" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -931,7 +922,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -952,7 +943,7 @@
           <caret line="109" column="72" lean-forward="false" selection-start-line="109" selection-start-column="72" selection-end-line="109" selection-end-column="72" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -973,7 +964,7 @@
           <caret line="109" column="72" lean-forward="false" selection-start-line="109" selection-start-column="72" selection-end-line="109" selection-end-column="72" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -994,7 +985,7 @@
           <caret line="109" column="72" lean-forward="false" selection-start-line="109" selection-start-column="72" selection-end-line="109" selection-end-column="72" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1015,7 +1006,7 @@
           <caret line="149" column="35" lean-forward="false" selection-start-line="149" selection-start-column="35" selection-end-line="149" selection-end-column="35" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1036,7 +1027,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1057,7 +1048,7 @@
           <caret line="86" column="0" lean-forward="true" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1181,11 +1172,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/aufgabe1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="336" column="31" lean-forward="false" selection-start-line="336" selection-start-column="31" selection-end-line="336" selection-end-column="31" />
+        <state relative-caret-position="506">
+          <caret line="546" column="21" lean-forward="false" selection-start-line="546" selection-start-column="21" selection-end-line="546" selection-end-column="21" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1485281815137" expanded="true" signature="14035:19237" ph="..." />
+            <marker date="1485282989368" expanded="true" signature="14035:19237" ph="..." />
           </folding>
         </state>
       </provider>
