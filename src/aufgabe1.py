@@ -117,6 +117,7 @@ def plot_photon_transfer():
 
     # Sättingspunkt ist an der Stelle der maximalen Varianz
     saturation_index = np.argmax(variance_gray_value_without_dark_noise)
+    print("saturation_index: ", saturation_index)
 
     # Sättingungspunkt im Plot einzeichnen
     saturation_x_coord = mean_gray_value_without_dark_noise[saturation_index]
@@ -493,12 +494,13 @@ def aufgabe3_4(system_gain):
 
     print("mean highpass: {}".format(mean_highpass))
     print("threshold: {}".format(threshold))
-    """
+
     fit_data = norm.pdf(x, mean_highpass, total_variance)
     max_val_fit = np.max(fit_data)
     fit_data *= (max_val / max_val_fit)
 
-    plt.plot(x, fit_data, 'r-', lw=5, alpha=0.6, label='norm pdf')"""
+    plt.plot(x, fit_data, 'r-', lw=5, alpha=0.6, label='norm pdf')
+    plt.savefig("../plots/PRNU_log_treshold.png")
 
     """Dead Pixel ermitteln"""
 
