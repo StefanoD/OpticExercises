@@ -249,7 +249,7 @@ def plot_sensivity(system_gain, saturation_index):
     plt.show()
     plt.clf()
 
-    return quantum_efficiency
+    return quantum_efficiency, responsivity
 
 
 def plot_SNR(system_gain, quantum_efficiency, variance_dark_signal):
@@ -566,7 +566,7 @@ def aufgabe3_4(system_gain):
 
     return dead_pixel_positions_low
 
-def aufgabe5(dead_pixels):
+def aufgabe5(dead_pixels, responsivity):
     """Erstes Dark Image"""
     """MessungenAufgabe3/geschlossen"""
     # ../MessungenAufgabe_3/geschlossen/*
@@ -628,15 +628,18 @@ def aufgabe5(dead_pixels):
     plt.imshow(interpolate_dead_pixels_image, cmap=plt.get_cmap("Greys"))
     plt.savefig("../plots/TestChartCalibratedDeadPixelInterpolation.png")
 
+    mean_photons_per_pixel = image_50[100,100] / responsivity
+    print("mean_photons_per_pixel: ", mean_photons_per_pixel)
+
     plt.show()
 
 def main():
     #plot_mean_of_photons()
     system_gain, saturation_index, variance_dark_signal = plot_photon_transfer()
-    quantum_efficiency = plot_sensivity(system_gain, saturation_index)
+    quantum_efficiency, responsivity = plot_sensivity(system_gain, saturation_index)
     plot_SNR(system_gain, quantum_efficiency, variance_dark_signal)
     dead_pixels = aufgabe3_4(system_gain)
-    aufgabe5(dead_pixels)
+    aufgabe5(dead_pixels, responsivity)
 
 if __name__ == '__main__':
     main()
